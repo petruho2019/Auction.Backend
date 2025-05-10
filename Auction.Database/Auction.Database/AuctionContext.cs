@@ -1,0 +1,27 @@
+﻿using Auction.Application.Interfaces;
+using Auction.Database.EntityTypeConfiguration;
+using Auction.Domain.Models;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Auction.Database
+{
+    public class AuctionContext : DbContext, IAuctionContext 
+    {
+        public virtual DbSet<User> Users { get; set; } = null!;
+
+        public AuctionContext(DbContextOptions options) : base(options)
+        {
+            
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.ApplyConfiguration(new UserConfiguration());        
+        }
+    }
+}

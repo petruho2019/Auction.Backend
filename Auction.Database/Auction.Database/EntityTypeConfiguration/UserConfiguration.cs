@@ -1,0 +1,23 @@
+﻿using Auction.Domain.Models;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
+namespace Auction.Database.EntityTypeConfiguration
+{
+    class UserConfiguration : IEntityTypeConfiguration<User>
+    {
+        public void Configure(EntityTypeBuilder<User> builder)
+        {
+            builder.HasKey(e => e.Id).HasName("User_pkey");
+            builder.ToTable("User");
+
+            builder.Property(e => e.Username)
+                .IsRequired();
+            builder.Property(e => e.Password)
+                .IsRequired();
+            builder.Property(e => e.Email)
+                .IsRequired();
+        }
+    }
+}
+
