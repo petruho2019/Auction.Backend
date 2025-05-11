@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Auction.Application.Common.Models.Dto
 {
-    public class UserDto : IMapWith<UserVm>
+    public class UserRegisterDto : IMapWith<UserVm>
     {
         public string Username { get; set; }
         public string Email { get; set; }
@@ -20,17 +20,9 @@ namespace Auction.Application.Common.Models.Dto
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<UserDto, UserVm>()
-                .ForMember(uv => uv.Username, opt => opt.MapFrom(u => u.Username))
-                .ForMember(uv => uv.Email, opt => opt.MapFrom(u => u.Email));
-
-            profile.CreateMap<UserDto, CreateUserCommand>()
+            profile.CreateMap<UserRegisterDto, CreateUserCommand>()
                 .ForMember(command => command.Username, opt => opt.MapFrom(ud => ud.Username))
                 .ForMember(command => command.Email, opt => opt.MapFrom(ud => ud.Email))
-                .ForMember(command => command.Password, opt => opt.MapFrom(ud => ud.Password));
-
-            profile.CreateMap<UserDto, LoginUserCommand>()
-                .ForMember(command => command.Username, opt => opt.MapFrom(ud => ud.Username))
                 .ForMember(command => command.Password, opt => opt.MapFrom(ud => ud.Password));
         }
     }

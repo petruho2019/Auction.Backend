@@ -36,13 +36,5 @@ namespace Auction.Application.Features
                 IsSuccess = false
             };
         }
-        public Result CreateFailureResult(string errorMessage)
-        {
-            return new Result()
-            {
-                ErrorMessage = errorMessage,
-                IsSuccess = false
-            };
-        }
     }
 }

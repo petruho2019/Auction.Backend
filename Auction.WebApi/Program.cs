@@ -57,6 +57,18 @@ internal class Program
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
 
+        builder.Services.AddCors(conf =>
+        {
+            conf.AddPolicy("Test", policy =>
+            {
+                policy.AllowAnyHeader();
+                policy.AllowAnyMethod();
+                policy.WithOrigins("http://localhost:9000");
+                policy.AllowCredentials();
+
+            });
+        });
+
         var app = builder.Build();
 
         app.UseAuthentication();
@@ -78,12 +90,11 @@ internal class Program
             DbInitializer.Initialize(context);
         }
 
-        
-
         app.UseStaticFiles();
-        
-
+      
         app.MapControllers();
+
+        app.UseCors("Test");
 
         app.Run();
     }

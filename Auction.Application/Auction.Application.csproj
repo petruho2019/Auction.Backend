@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <Folder Include="Common\Services\" />
-    <Folder Include="Features\Users\Queries\" />
   </ItemGroup>
 
   <ItemGroup>

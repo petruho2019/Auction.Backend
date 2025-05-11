@@ -26,7 +26,7 @@ namespace Auction.Application.Features.Users.Commands.Login
             var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Username == request.Username, cancellationToken);
 
             if (user == null)
-                return CreateFailureResult<UserVm>("Пользователь с этим именем пользователя не найден");
+                return CreateFailureResult<UserVm>("Пользователь с таким именем не найден");
             if (!BCrypt.Net.BCrypt.Verify(request.Password, user.Password))
                 return CreateFailureResult<UserVm>("Не верный пароль");
 
