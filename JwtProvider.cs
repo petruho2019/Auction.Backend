@@ -10,7 +10,7 @@ using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
 
-namespace Auction.Application.JwtProvider
+namespace Auction.JwtProvider
 {
     public class JwtProvider : IJwtProvider
     {

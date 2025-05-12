@@ -1,6 +1,6 @@
 ﻿using Auction.Application.Common.Mappings;
 using Auction.Application.Common.Models;
-using Auction.Application.Common.Models.Vm;
+using Auction.Application.Common.Models.Vm.Users;
 using MediatR;
 using System;
 using System.Collections.Generic;

@@ -6,17 +6,18 @@ using Auction.Domain.Models;
 using AutoMapper;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Auction.Application.Common.Models.Dto
+namespace Auction.Application.Common.Models.Dto.Users
 {
-    public class UserRegisterDto : IMapWith<UserVm>
+    public class UserRegisterDto : UserRequest, IMapWith<CreateUserCommand>
     {
-        public string Username { get; set; }
+        [EmailAddress(ErrorMessage = "Неправильный формат email")]
+        [Required(ErrorMessage = "Поле 'Почта' обязательно для заполнения")]
         public string Email { get; set; }
-        public string Password { get; set; }
 
         public void Mapping(Profile profile)
         {

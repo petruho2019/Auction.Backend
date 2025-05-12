@@ -11,6 +11,8 @@ namespace Auction.Application.Interfaces
     public interface IAuctionContext
     {
         DbSet<User> Users { get; set; }
+        DbSet<Product> Products { get; set; }
+        DbSet<ProductImage> ProductImages { get; set; }
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }
 }

@@ -1,5 +1,5 @@
 ﻿using Auction.Application.Common.Models;
-using Auction.Application.Common.Models.Vm;
+using Auction.Application.Common.Models.Vm.Users;
 using Auction.Application.Interfaces;
 using Auction.Domain.Models;
 using AutoMapper;
@@ -10,7 +10,7 @@ namespace Auction.Application.Features.Users.Commands.CreateUser
     public class CreateUserCommandHandler : BaseComponentHandler, IRequestHandler<CreateUserCommand, Result<UserVm>>
     {
         public IJwtProvider _jwtProvider { get; set; }
-        public CreateUserCommandHandler(IAuctionContext dbContext, IMapper mapper, IJwtProvider jwtProvider) : base(dbContext, mapper)
+        public CreateUserCommandHandler(IAuctionContext dbContext, IMapper mapper, IJwtProvider jwtProvider, ICurrentUserService currentUserService) : base(dbContext, mapper, currentUserService)
         {
             _jwtProvider = jwtProvider;
         }

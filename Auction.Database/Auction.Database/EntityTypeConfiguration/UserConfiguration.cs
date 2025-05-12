@@ -17,6 +17,11 @@ namespace Auction.Database.EntityTypeConfiguration
                 .IsRequired();
             builder.Property(e => e.Email)
                 .IsRequired();
+
+            builder
+                .HasMany(u => u.Products)
+                .WithOne(p => p.User)
+                .HasForeignKey(p => p.UserId);
         }
     }
 }

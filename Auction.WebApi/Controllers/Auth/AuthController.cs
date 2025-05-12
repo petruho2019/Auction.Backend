@@ -1,5 +1,5 @@
 ﻿using Auction.Application.Common.Models;
-using Auction.Application.Common.Models.Dto;
+using Auction.Application.Common.Models.Dto.Users;
 using Auction.Application.Features.Users.Commands.CreateUser;
 using Auction.Application.Features.Users.Commands.Login;
 using AutoMapper;

@@ -1,8 +1,8 @@
 
 using Auction.Application;
 using Auction.Application.Common.Mappings;
+using Auction.Application.Common.Services;
 using Auction.Application.Interfaces;
-using Auction.Application.JwtProvider;
 using Auction.Database;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore.Internal;
@@ -68,6 +68,8 @@ internal class Program
 
             });
         });
+
+        builder.Services.AddTransient<ICurrentUserService>(provider => new CurrentUserService((HttpContextAccessor)provider.GetRequiredService(typeof(HttpContextAccessor))));
 
         var app = builder.Build();
 

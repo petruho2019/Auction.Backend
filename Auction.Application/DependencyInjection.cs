@@ -1,15 +1,8 @@
 ﻿using Auction.Application.Common.Mappings;
 using Auction.Application.Interfaces;
-using Auction.Application.JwtProvider;
-using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Auction.Application
 {

@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Auction.Application.Common.Models.Vm
+namespace Auction.Application.Common.Models.Vm.Users
 {
     public class UserVm : IMapWith<User>
     {

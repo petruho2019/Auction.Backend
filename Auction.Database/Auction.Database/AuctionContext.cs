@@ -13,6 +13,8 @@ namespace Auction.Database
     public class AuctionContext : DbContext, IAuctionContext 
     {
         public virtual DbSet<User> Users { get; set; } = null!;
+        public virtual DbSet<Product> Products { get; set; } = null!;
+        public virtual DbSet<ProductImage> ProductImages { get; set; } = null!;
 
         public AuctionContext(DbContextOptions options) : base(options)
         {
@@ -21,7 +23,9 @@ namespace Auction.Database
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new UserConfiguration());        
+            modelBuilder.ApplyConfiguration(new UserConfiguration());
+            modelBuilder.ApplyConfiguration(new ProductConfiguration());
+            modelBuilder.ApplyConfiguration(new ProductImageConfiguration());
         }
     }
 }

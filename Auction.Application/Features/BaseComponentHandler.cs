@@ -14,10 +14,15 @@ namespace Auction.Application.Features
     {
         public readonly IAuctionContext _dbContext;
         public readonly IMapper _mapper;
-        public BaseComponentHandler(IAuctionContext dbContext, IMapper mapper)
+        public readonly ICurrentUserService _userCurrentService;
+        public BaseComponentHandler(
+            IAuctionContext dbContext, 
+            IMapper mapper, 
+            ICurrentUserService currentUserService)
         {
             _dbContext = dbContext;
             _mapper = mapper;
+            _userCurrentService = currentUserService;
         }
 
         public Result<T> CreateSuccessResult<T>(T data)

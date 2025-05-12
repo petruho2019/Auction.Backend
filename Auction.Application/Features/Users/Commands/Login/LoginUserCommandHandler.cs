@@ -1,5 +1,5 @@
 ﻿using Auction.Application.Common.Models;
-using Auction.Application.Common.Models.Vm;
+using Auction.Application.Common.Models.Vm.Users;
 using Auction.Application.Interfaces;
 using AutoMapper;
 using BCrypt.Net;
@@ -16,7 +16,7 @@ namespace Auction.Application.Features.Users.Commands.Login
     public class LoginUserCommandHandler : BaseComponentHandler, IRequestHandler<LoginUserCommand, Result<UserVm>>
     {
         public IJwtProvider _jwtProvider { get; set; }
-        public LoginUserCommandHandler(IAuctionContext dbContext, IMapper mapper, IJwtProvider jwtProvider) : base(dbContext, mapper)
+        public LoginUserCommandHandler(IAuctionContext dbContext, IMapper mapper, IJwtProvider jwtProvider, ICurrentUserService currentUserService) : base(dbContext, mapper, currentUserService)
         {
             _jwtProvider = jwtProvider;
         }
