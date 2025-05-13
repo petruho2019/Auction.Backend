@@ -1,1 +1,2 @@
-asp.net, mediatr, automapper, jwt
+asp.net, mediatr, automapper, jwt.
+Миграции в Auction.WebApi
