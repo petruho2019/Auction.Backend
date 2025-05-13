@@ -24,7 +24,7 @@ namespace Auction.WebApi.Controllers.Product
             return Ok(productVm);
         }
 
-        [Route("/my")]
+        [Route("list")]
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {

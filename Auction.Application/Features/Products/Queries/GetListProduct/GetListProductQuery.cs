@@ -1,4 +1,5 @@
-﻿using Auction.Domain.Models;
+﻿using Auction.Application.Common.Models.Vm.Products;
+using Auction.Domain.Models;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Auction.Application.Features.Products.Queries.GetAll
 {
-    public class GetListProductQuery : IRequest<List<Product>>
+    public class GetListProductQuery : IRequest<ProductListVm>
     {
     }
 }

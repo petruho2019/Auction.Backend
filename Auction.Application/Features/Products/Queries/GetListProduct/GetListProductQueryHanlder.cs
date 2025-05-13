@@ -15,15 +15,16 @@ using System.Threading.Tasks;
 
 namespace Auction.Application.Features.Products.Queries.GetListProduct
 {
-    public class GetListProductQueryHanlder : BaseComponentHandler, IRequestHandler<GetListProductQuery, List<Product>>
+    public class GetListProductQueryHanlder : BaseComponentHandler, IRequestHandler<GetListProductQuery, ProductListVm>
     {
         public GetListProductQueryHanlder(IAuctionContext dbContext, IMapper mapper, ICurrentUserService currentUserService) : base(dbContext, mapper, currentUserService)
         {
         }
 
-        public async Task<List<Product>> Handle(GetListProductQuery request, CancellationToken cancellationToken)
+        public async Task<ProductListVm> Handle(GetListProductQuery request, CancellationToken cancellationToken)
         {
-            return await _dbContext.Products.Where(p => p.UserId == _userCurrentService.UserId).ToListAsync(cancellationToken);
+            var products = await _dbContext.Products.Where(p => p.UserId == _userCurrentService.UserId).ToListAsync(cancellationToken);
+            return new() { Products = products };
         }
     }
 }
