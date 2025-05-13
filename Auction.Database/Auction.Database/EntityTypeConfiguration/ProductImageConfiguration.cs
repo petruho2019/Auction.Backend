@@ -13,7 +13,9 @@ namespace Auction.Database.EntityTypeConfiguration
     {
         public void Configure(EntityTypeBuilder<ProductImage> builder)
         {
-            builder.HasKey(pi => pi.Id);
+            builder.HasKey(pi => pi.Id).HasName("ProductImage_pkey");
+            builder.ToTable("ProductImage");
+
             builder.Property(pi => pi.Image).IsRequired();
 
             builder

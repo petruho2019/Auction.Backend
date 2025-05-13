@@ -1,5 +1,6 @@
-﻿using Auction.Application.Common.Attributes.CityValidation;
-using Auction.Application.Common.Attributes.Quantity;
+﻿
+using Auction.Application.Common.Attributes.Field.CityValidation;
+using Auction.Application.Common.Attributes.Field.Quantity;
 using Auction.Application.Common.Mappings;
 using Auction.Application.Features.Products.Commands.CreateProduct;
 using Auction.Domain.Models;

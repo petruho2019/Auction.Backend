@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Auction.Application.Common.Models.Vm.Products
 {
-    public class ProductVm : IMapWith<Product>
+    public class CreateProductVm : IMapWith<Product>
     {
         public string Name { get; set; }
         public string Description { get; set; }
@@ -22,7 +22,7 @@ namespace Auction.Application.Common.Models.Vm.Products
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<Product, ProductVm>()
+            profile.CreateMap<Product, CreateProductVm>()
                 .ForMember(vm => vm.Name, opt => opt.MapFrom(p => p.Name))
                 .ForMember(vm => vm.Description, opt => opt.MapFrom(p => p.Description))
                 .ForMember(vm => vm.Location, opt => opt.MapFrom(p => p.Location))

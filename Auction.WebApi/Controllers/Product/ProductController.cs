@@ -3,12 +3,14 @@ using Auction.Application.Features.Products.Commands.CreateProduct;
 using Auction.Application.Features.Products.Queries.GetAll;
 using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Auction.WebApi.Controllers.Product
 {
     [ApiController]
     [Route("/api/[controller]")]
+    [Authorize]
     public class ProductController : BaseController
     {
         public ProductController(IMediator mediator, IMapper mapper) : base(mediator, mapper)

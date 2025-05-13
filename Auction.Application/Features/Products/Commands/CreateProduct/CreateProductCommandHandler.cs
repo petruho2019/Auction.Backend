@@ -11,14 +11,14 @@ using System.Threading.Tasks;
 
 namespace Auction.Application.Features.Products.Commands.CreateProduct
 {
-    public class CreateProductCommandHandler : BaseComponentHandler, IRequestHandler<CreateProductCommand, ProductVm>
+    public class CreateProductCommandHandler : BaseComponentHandler, IRequestHandler<CreateProductCommand, CreateProductVm>
     {
 
         public CreateProductCommandHandler(IAuctionContext dbContext, IMapper mapper, ICurrentUserService currentUserService) : base(dbContext, mapper, currentUserService)
         {
         }
 
-        public async Task<ProductVm> Handle(CreateProductCommand request, CancellationToken cancellationToken)
+        public async Task<CreateProductVm> Handle(CreateProductCommand request, CancellationToken cancellationToken)
         {
 
             var product = new Product()
@@ -44,7 +44,7 @@ namespace Auction.Application.Features.Products.Commands.CreateProduct
             await _dbContext.Products.AddAsync(product, cancellationToken);
             await _dbContext.SaveChangesAsync(cancellationToken);
 
-            return _mapper.Map<ProductVm>(product);
+            return _mapper.Map<CreateProductVm>(product);
         }
     }
 }

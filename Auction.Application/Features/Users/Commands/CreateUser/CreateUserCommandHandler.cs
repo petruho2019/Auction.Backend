@@ -18,7 +18,7 @@ namespace Auction.Application.Features.Users.Commands.CreateUser
         public async Task<Result<UserVm>> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
             if (_dbContext.Users.Any(u => u.Username == request.Username))
-                return CreateFailureResult<UserVm>("Пользователь с таким именем пользователя занят");
+                return CreateFailureResult<UserVm>("Имя пользователя занято");
             if (_dbContext.Users.Any(u => u.Email == request.Email))
                 return CreateFailureResult<UserVm>("Пользователь с таким email уже существует");
 

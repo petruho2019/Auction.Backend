@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Auction.Application.Common.Attributes.Quantity
+namespace Auction.Application.Common.Attributes.Field.Quantity
 {
     class NotZero : ValidationAttribute
     {

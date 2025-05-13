@@ -6,7 +6,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace Auction.Application.Common.Attributes.CityValidation
+namespace Auction.Application.Common.Attributes.Field.CityValidation
 {
     public class CityValidator : ValidationAttribute
     {
@@ -14,12 +14,12 @@ namespace Auction.Application.Common.Attributes.CityValidation
 
         private static readonly HashSet<string> _cityNames = new(
             _cities.Select(c => c.Name),
-            StringComparer.OrdinalIgnoreCase  // Регистронезависимый поиск
+            StringComparer.OrdinalIgnoreCase  
         );
 
         private static List<City> LoadCities()
         {
-            string jsonPath = @"C:\Users\Влад\Desktop\Developer\CSharp\ConsoleApp1\russian-cities.json";
+            string jsonPath = @"C:\Users\Влад\Desktop\Developer\CSharp\Auction\Backend\Auction.Backend\russian-cities.json";
             string json = File.ReadAllText(jsonPath);
             return JsonSerializer.Deserialize<List<City>>(json)!;
         }

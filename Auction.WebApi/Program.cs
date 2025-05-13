@@ -17,6 +17,8 @@ internal class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
+    
+
         builder.Services.AddApplication(builder.Configuration);
         builder.Services.AddAuctionContext(builder.Configuration);
         builder.Services.AddAutoMapper(conf =>
@@ -56,6 +58,7 @@ internal class Program
         builder.Services.AddMvc();
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
+        builder.Services.AddHttpContextAccessor();
 
         builder.Services.AddCors(conf =>
         {
@@ -69,7 +72,7 @@ internal class Program
             });
         });
 
-        builder.Services.AddTransient<ICurrentUserService>(provider => new CurrentUserService((HttpContextAccessor)provider.GetRequiredService(typeof(HttpContextAccessor))));
+        builder.Services.AddTransient<ICurrentUserService, CurrentUserService>();
 
         var app = builder.Build();
 

@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Auction.Application.Features.Products.Commands.CreateProduct
 {
-    public class CreateProductCommand : IRequest<ProductVm>
+    public class CreateProductCommand : IRequest<CreateProductVm>
     {
         public string Name { get; set; }
         public string Description { get; set; }

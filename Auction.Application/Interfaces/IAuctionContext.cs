@@ -13,6 +13,7 @@ namespace Auction.Application.Interfaces
         DbSet<User> Users { get; set; }
         DbSet<Product> Products { get; set; }
         DbSet<ProductImage> ProductImages { get; set; }
+        DbSet<Domain.Models.Auction> Auctions { get; set; }
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }
 }

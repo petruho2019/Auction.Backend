@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace Auction.Application.Common.Attributes.CityValidation
+namespace Auction.Application.Common.Attributes.Field.CityValidation
 {
     public class City
     {

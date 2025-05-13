@@ -10,12 +10,11 @@ namespace Auction.Application.Common.Services
 {
     public class CurrentUserService : ICurrentUserService
     {
-        public CurrentUserService(HttpContextAccessor contextAccessor)
+        private readonly IHttpContextAccessor _contextAccessor;
+        public CurrentUserService(IHttpContextAccessor contextAccessor)
         {
             _contextAccessor = contextAccessor;
         }
-
-        private readonly HttpContextAccessor _contextAccessor;
         public string Username => _contextAccessor.HttpContext.User.Identity!.Name!;
 
         public Guid UserId => Guid.Parse(_contextAccessor.HttpContext.User.FindFirst("UUID")!.Value);

@@ -51,6 +51,17 @@ namespace Auction.WebApi.Controllers.Auth
             return Ok(loginResult.Data);
         }
 
+        [HttpGet("logout")]
+        public void Logout()
+        {
+            DeleteTokenFromCookie(Response);
+        }
+
+        private void DeleteTokenFromCookie(HttpResponse response)
+        {
+            response.Cookies.Delete("auction-token");
+        }
+
         private void AppendTokenToCookie(HttpResponse respone, string token)
         {
             respone.Cookies.Append("auction-token", token);

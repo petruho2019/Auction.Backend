@@ -10,11 +10,12 @@ using System.Threading.Tasks;
 
 namespace Auction.Database
 {
-    public class AuctionContext : DbContext, IAuctionContext 
+    public class AuctionContext : DbContext, IAuctionContext
     {
         public virtual DbSet<User> Users { get; set; } = null!;
         public virtual DbSet<Product> Products { get; set; } = null!;
         public virtual DbSet<ProductImage> ProductImages { get; set; } = null!;
+        public DbSet<Domain.Models.Auction> Auctions { get; set; } = null!;
 
         public AuctionContext(DbContextOptions options) : base(options)
         {
@@ -26,6 +27,8 @@ namespace Auction.Database
             modelBuilder.ApplyConfiguration(new UserConfiguration());
             modelBuilder.ApplyConfiguration(new ProductConfiguration());
             modelBuilder.ApplyConfiguration(new ProductImageConfiguration());
+            modelBuilder.ApplyConfiguration(new AuctionConfiguration());
+            modelBuilder.ApplyConfiguration(new AuctionParticipationConfiguration());
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using Auction.Application.Common.Models.Enum;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -6,5 +6,10 @@ using System.Threading.Tasks;
 
 namespace Auction.Domain
 {
-    // TODO Спросить про вынесение логики создания и присваивания jwt токена в Create,Login UserCommandHanlder, в контроллер который из медиатора получает ответ UserVm
+    // TODO Валидировать пришедший аукцион в контроллер,
+    // DateStart валидировать через аттрибут, что она валидна, нельзя
+    // указать что аукцион начался вчера
+
+    // TODO Quantity NotZero and Range(1,200)
+    // TODO Price не NotZero
 }
