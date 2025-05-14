@@ -1,7 +1,8 @@
-﻿using Auction.Application.Common.Attributes.Field.Date;
-using Auction.Application.Common.Attributes.Field.Quantity;
+﻿
+using Auction.Application.Common.Attributes.Property.Date;
+using Auction.Application.Common.Attributes.Property.Integer;
 using Auction.Application.Common.Mappings;
-using Auction.Application.Features.Auctions.Commands;
+using Auction.Application.Features.Auctions.Commands.CreateAuction;
 using AutoMapper;
 using System;
 using System.Collections.Generic;

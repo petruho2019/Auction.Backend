@@ -1,5 +1,5 @@
 ﻿using Auction.Application.Common.Mappings;
-using Auction.Application.Common.Models.Vm.Users;
+using Auction.Application.Common.Models.Vm.Users.Auth;
 using Auction.Application.Features.Users.Commands.Login;
 using AutoMapper;
 using System;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Auction.Application.Common.Models.Dto.Users
 {
-    public class UserLoginDto : UserRequest, IMapWith<UserVm>
+    public class UserLoginDto : UserRequest, IMapWith<UserAuth>
     {
         public void Mapping(Profile profile)
         {

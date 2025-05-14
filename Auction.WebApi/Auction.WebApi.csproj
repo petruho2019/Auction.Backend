@@ -22,4 +22,14 @@
     <ProjectReference Include="..\Auction.Database\Auction.Database.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="russian-cities.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
 </Project>

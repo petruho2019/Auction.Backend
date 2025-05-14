@@ -33,9 +33,27 @@ namespace Auction.Application.Features.Products.Commands.CreateProduct
 
             var images = new List<ProductImage>();
 
+            int count = 0;
+
             foreach (var image in request.Images)
             {
-                images.Add(new() { Image = image, Product = product });
+                count++;
+
+                var imagesDir = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images");
+
+                if (!Directory.Exists(imagesDir))
+                    Directory.CreateDirectory(imagesDir);
+
+                var fileName = $"{product.Id}_{count}.jpg";
+                var filePath = Path.Combine(imagesDir, fileName);
+
+                await File.WriteAllBytesAsync(filePath, image, cancellationToken);
+
+                images.Add(new ProductImage
+                {
+                    Image = filePath,
+                    Product = product
+                });
             }
 
             product.Images = images;

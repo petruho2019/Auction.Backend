@@ -1,5 +1,6 @@
 ﻿using Auction.Application.Common.Models.Dto.Auction;
-using Auction.Application.Features.Auctions.Commands;
+using Auction.Application.Features.Auctions.Commands.CreateAuction;
+using Auction.Application.Features.Auctions.Queries.GetListAuction;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -8,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Auction.WebApi.Controllers.Auction
 {
     [ApiController]
-    [Route("/api/[controller]/")]
+    [Route("/api/[controller]")]
     [Authorize]
     public class AuctionController : BaseController
     {
@@ -26,7 +27,15 @@ namespace Auction.WebApi.Controllers.Auction
                 return BadRequest(createResult.ErrorMessage);
             }
 
-            return Ok(createResult);
+            return Ok(createResult.Data);
+        }
+
+        [HttpGet("")]
+        public async Task<IActionResult> GetList()
+        {
+            var listAuctions = await _mediator.Send(new GetListAuctionsQuery());
+
+            return Ok(listAuctions);
         }
     }
 }

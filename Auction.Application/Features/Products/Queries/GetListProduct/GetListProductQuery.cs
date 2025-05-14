@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Auction.Application.Features.Products.Queries.GetAll
 {
-    public class GetListProductQuery : IRequest<ProductListVm>
+    public class GetListProductQuery : IRequest<List<ProductListVm>>
     {
     }
 }

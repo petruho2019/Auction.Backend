@@ -21,8 +21,4 @@
 		<ProjectReference Include="..\Auction.Domain\Auction.Domain.csproj" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <Folder Include="Features\Auctions\Queries\" />
-	</ItemGroup>
-
 </Project>

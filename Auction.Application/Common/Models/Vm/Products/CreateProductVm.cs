@@ -16,7 +16,7 @@ namespace Auction.Application.Common.Models.Vm.Products
         public string Description { get; set; }
         public string Location { get; set; }
         public int Quantity { get; set; }
-        public List<byte[]> Image { get; set; }
+        public List<string> Image { get; set; }
         public DateTime DateCreate { get; set; }
 
         public void Mapping(Profile profile)

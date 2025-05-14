@@ -15,16 +15,27 @@ using System.Threading.Tasks;
 
 namespace Auction.Application.Features.Products.Queries.GetListProduct
 {
-    public class GetListProductQueryHanlder : BaseComponentHandler, IRequestHandler<GetListProductQuery, ProductListVm>
+    public class GetListProductQueryHanlder : BaseComponentHandler, IRequestHandler<GetListProductQuery, List<ProductListVm>>
     {
         public GetListProductQueryHanlder(IAuctionContext dbContext, IMapper mapper, ICurrentUserService currentUserService) : base(dbContext, mapper, currentUserService)
         {
         }
 
-        public async Task<ProductListVm> Handle(GetListProductQuery request, CancellationToken cancellationToken)
+        public async Task<List<ProductListVm>> Handle(GetListProductQuery request, CancellationToken cancellationToken)
         {
-            var products = await _dbContext.Products.Where(p => p.UserId == _userCurrentService.UserId).ToListAsync(cancellationToken);
-            return new() { Products = products };
+            var products = await _dbContext.Products
+                .Include(p => p.Images)
+                .Where(p => p.UserId == _userCurrentService.UserId)
+                .ToListAsync(cancellationToken);
+
+            var listVms = new List<ProductListVm>();
+
+            foreach (var product in products)
+            {
+                listVms.Add(_mapper.Map<ProductListVm>(product));
+            }
+
+            return listVms;
         }
     }
 }

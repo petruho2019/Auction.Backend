@@ -1,5 +1,6 @@
 ﻿using Auction.Application.Common.Models;
 using Auction.Application.Common.Models.Dto.Users;
+using Auction.Application.Common.Models.Vm.Users.Auth;
 using Auction.Application.Features.Users.Commands.CreateUser;
 using Auction.Application.Features.Users.Commands.Login;
 using AutoMapper;
@@ -9,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Auction.WebApi.Controllers.Auth
 {
-    [Route("/api/[controller]/")]
+    [Route("/api/[controller]")]
     [ApiController]
     public class AuthController : BaseController
     {
@@ -35,7 +36,7 @@ namespace Auction.WebApi.Controllers.Auth
 
             AppendTokenToCookie(Response, createResult.Data!.Token);
 
-            return Ok(createResult.Data);
+            return Ok(_mapper.Map<UserVm>(createResult.Data));
         }
 
         [HttpPost("login")]
@@ -46,25 +47,38 @@ namespace Auction.WebApi.Controllers.Auth
             if (!loginResult.IsSuccess)
                 return BadRequest(loginResult.ErrorMessage);
 
-            Response.Cookies.Append("auction-token", loginResult.Data!.Token, new CookieOptions() { SameSite = SameSiteMode.None, Secure = true, HttpOnly = true, MaxAge = TimeSpan.FromHours(24)});
-            
-            return Ok(loginResult.Data);
+            AppendTokenToCookie(Response, loginResult.Data!.Token);
+
+            return Ok(_mapper.Map<UserVm>(loginResult.Data));
         }
 
-        [HttpGet("logout")]
-        public void Logout()
+        [HttpPost("logout")]
+        public IActionResult Logout()
         {
             DeleteTokenFromCookie(Response);
+            return Ok();
         }
 
         private void DeleteTokenFromCookie(HttpResponse response)
         {
-            response.Cookies.Delete("auction-token");
+            response.Cookies.Delete("auction-token", new CookieOptions()
+            {
+                Path = "/",
+                SameSite = SameSiteMode.None,
+                Secure = true,
+                HttpOnly = true,
+                MaxAge = TimeSpan.FromHours(24)
+            });
         }
 
         private void AppendTokenToCookie(HttpResponse respone, string token)
         {
-            respone.Cookies.Append("auction-token", token);
+            respone.Cookies.Append("auction-token", token, new CookieOptions() { 
+                SameSite = SameSiteMode.None, 
+                Secure = true, 
+                HttpOnly = true, 
+                MaxAge = TimeSpan.FromHours(24) 
+            });
         }
     }
 }

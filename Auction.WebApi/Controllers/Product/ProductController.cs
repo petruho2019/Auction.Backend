@@ -30,7 +30,8 @@ namespace Auction.WebApi.Controllers.Product
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            return Ok(await _mediator.Send(new GetListProductQuery()));
+            var products = await _mediator.Send(new GetListProductQuery());
+            return Ok(products);
         }
     }
 }

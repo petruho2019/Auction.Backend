@@ -1,5 +1,5 @@
 ﻿using Auction.Application.Common.Models;
-using Auction.Application.Common.Models.Vm.Users;
+using Auction.Application.Common.Models.Vm.Users.Auth;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Auction.Application.Features.Users.Commands.CreateUser
 {
-    public class CreateUserCommand : IRequest<Result<UserVm>>
+    public class CreateUserCommand : IRequest<Result<UserAuth>>
     {
         public string Username { get; set; }
         public string Password { get; set; }

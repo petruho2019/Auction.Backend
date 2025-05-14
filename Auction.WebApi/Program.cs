@@ -6,6 +6,7 @@ using Auction.Application.Interfaces;
 using Auction.Database;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore.Internal;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 using System.Reflection;
 using System.Text;
@@ -96,7 +97,7 @@ internal class Program
         }
 
         app.UseStaticFiles();
-      
+
         app.MapControllers();
 
         app.UseCors("Test");
