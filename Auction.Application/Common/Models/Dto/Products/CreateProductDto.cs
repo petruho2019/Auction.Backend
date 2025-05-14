@@ -36,9 +36,6 @@ namespace Auction.Application.Common.Models.Dto.Products
         [Required(ErrorMessage = "Поле 'Изображения' не должно быть пустым")]
         public List<byte[]> Images { get; set; }
 
-        [Range(1, 10000000, ErrorMessage = "Цена не может быть выше чем 10 миллионов")]
-        public long Price { get; set; }
-
         public void Mapping(Profile profile)
         {
             profile.CreateMap<CreateProductDto, CreateProductCommand>()
@@ -46,8 +43,7 @@ namespace Auction.Application.Common.Models.Dto.Products
                 .ForMember(command => command.Description, opt => opt.MapFrom(dto => dto.Description))
                 .ForMember(command => command.Location, opt => opt.MapFrom(dto => dto.Location))
                 .ForMember(command => command.Quantity, opt => opt.MapFrom(dto => dto.Quantity))
-                .ForMember(command => command.Images, opt => opt.MapFrom(dto => dto.Images))
-                .ForMember(command => command.Price, opt => opt.MapFrom(dto => dto.Price));
+                .ForMember(command => command.Images, opt => opt.MapFrom(dto => dto.Images));
         }
     }
 }

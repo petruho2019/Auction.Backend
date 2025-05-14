@@ -18,7 +18,6 @@ namespace Auction.Database.EntityTypeConfiguration
 
             builder.Property(p => p.Name).IsRequired();
             builder.Property(p => p.Description).HasColumnType("text");
-            builder.Property(p => p.Price).HasColumnType("bigint");
             builder.Property(p => p.Location).IsRequired();
 
             builder

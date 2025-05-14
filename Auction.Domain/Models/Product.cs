@@ -16,7 +16,6 @@ namespace Auction.Domain.Models
         public string? Description { get; set; }
         public string Location { get; set; }
         public int Quantity { get; set; }
-        public long Price { get; set; }
         public DateTime DateCreate { get; set; } = DateTime.UtcNow;
 
         public Guid UserId { get; set; }

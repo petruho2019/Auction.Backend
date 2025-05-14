@@ -27,7 +27,6 @@ namespace Auction.Application.Features.Products.Commands.CreateProduct
                 Name = request.Name,
                 Description = request.Description,
                 Location = request.Location,
-                Price = request.Price,
                 Quantity = request.Quantity,
                 UserId = _userCurrentService.UserId,
             };

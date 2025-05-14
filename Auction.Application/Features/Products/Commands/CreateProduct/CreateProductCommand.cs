@@ -10,6 +10,5 @@ namespace Auction.Application.Features.Products.Commands.CreateProduct
         public string Location { get; set; }
         public int Quantity { get; set; }
         public List<byte[]> Images { get; set; }
-        public long Price { get; set; }
     }
 }

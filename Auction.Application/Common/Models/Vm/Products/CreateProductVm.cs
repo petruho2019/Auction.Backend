@@ -17,7 +17,6 @@ namespace Auction.Application.Common.Models.Vm.Products
         public string Location { get; set; }
         public int Quantity { get; set; }
         public List<byte[]> Image { get; set; }
-        public long Price { get; set; }
         public DateTime DateCreate { get; set; }
 
         public void Mapping(Profile profile)
@@ -27,7 +26,6 @@ namespace Auction.Application.Common.Models.Vm.Products
                 .ForMember(vm => vm.Description, opt => opt.MapFrom(p => p.Description))
                 .ForMember(vm => vm.Location, opt => opt.MapFrom(p => p.Location))
                 .ForMember(vm => vm.Quantity, opt => opt.MapFrom(p => p.Quantity))
-                .ForMember(vm => vm.Price, opt => opt.MapFrom(p => p.Price))
                 .ForMember(vm => vm.DateCreate, opt => opt.MapFrom(p => p.DateCreate))
                 .ForMember(vm => vm.Image, opt => opt.MapFrom(p => p.Images.Select(i => i.Image).ToList()));
         }
