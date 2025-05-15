@@ -23,14 +23,28 @@ namespace Auction.Application.Features.Products.Queries.GetListProduct
 
         public async Task<List<ProductListVm>> Handle(GetListProductQuery request, CancellationToken cancellationToken)
         {
-            var products = await _dbContext.Products
+            var productsWithCalculateQuantity = await _dbContext.Auctions
+                .Include(a => a.Product)
+                .Include(a => a.Product.Images)
+                .Select(a => new ProductListVm
+                {
+                    ProductId = a.Product.Id,
+                    Name = a.Product.Name,
+                    Description = a.Product.Description,
+                    Location = a.Product.Location,
+                    Quantity = a.Product.Quantity - a.Product.Auctions.Sum(a => a.Quantity),
+                    DateCreate = a.Product.DateCreate,
+                    Images = a.Product.Images.Select(i => i.Image).ToList()
+                }).ToListAsync();
+
+            /*var products = await _dbContext.Products
                 .Include(p => p.Images)
                 .Where(p => p.UserId == _userCurrentService.UserId)
-                .ToListAsync(cancellationToken);
+                .ToListAsync(cancellationToken);*/
 
             var listVms = new List<ProductListVm>();
 
-            foreach (var product in products)
+            foreach (var product in productsWithCalculateQuantity)
             {
                 listVms.Add(_mapper.Map<ProductListVm>(product));
             }

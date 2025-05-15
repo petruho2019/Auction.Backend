@@ -11,6 +11,7 @@ namespace Auction.Application.Common.Models.Vm.Products
 {
     public class ProductListVm : IMapWith<Product>
     {
+        public Guid ProductId { get; set; }
         public string Name { get; set; }
         public string? Description { get; set; }
         public string Location { get; set; }
@@ -21,6 +22,7 @@ namespace Auction.Application.Common.Models.Vm.Products
         public void Mapping(Profile profile)
         {
             profile.CreateMap<Product, ProductListVm>()
+                .ForMember(plv => plv.ProductId, opt => opt.MapFrom(p => p.Id))
                 .ForMember(plv => plv.Name, opt => opt.MapFrom(p => p.Name))
                 .ForMember(plv => plv.Description, opt => opt.MapFrom(p => p.Description))
                 .ForMember(plv => plv.Location, opt => opt.MapFrom(p => p.Location))

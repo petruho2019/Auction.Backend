@@ -64,7 +64,6 @@ namespace Auction.Application.Features.Auctions.Commands.CreateAuction
             {
                 Id = Guid.NewGuid(),
                 CreatorId = creatorDto.Id,
-                Creator = new User { Id = creatorDto.Id, Username = creatorDto.Username, Email = creatorDto.Email },
                 ProductId = request.ProductId,
                 CurrentPrice = request.Price,
                 DateStart = request.DateStart,
@@ -76,6 +75,7 @@ namespace Auction.Application.Features.Auctions.Commands.CreateAuction
             await _dbContext.SaveChangesAsync(ct);
 
             var vm = _mapper.Map<CreateAuctionVm>(auction);
+            vm.Creator = new() { Email = creatorDto.Email, Username = creatorDto.Username };
             return CreateSuccessResult(vm);
         }
 

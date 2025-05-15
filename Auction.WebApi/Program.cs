@@ -4,6 +4,7 @@ using Auction.Application.Common.Mappings;
 using Auction.Application.Common.Services;
 using Auction.Application.Interfaces;
 using Auction.Database;
+using Auction.JwtProvider;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Extensions.FileProviders;
@@ -21,6 +22,7 @@ internal class Program
     
 
         builder.Services.AddApplication(builder.Configuration);
+        builder.Services.AddJwtProvider(builder.Configuration);
         builder.Services.AddAuctionContext(builder.Configuration);
         builder.Services.AddAutoMapper(conf =>
         {

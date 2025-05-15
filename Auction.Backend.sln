@@ -23,6 +23,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Элементы решен
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Auction.Database", "Auction.Database\Auction.Database.csproj", "{01BC45AC-82B6-F913-AF01-AADEB9B9CFF6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Auction.JwtProvider", "Auction.JwtProvider\Auction.JwtProvider\Auction.JwtProvider.csproj", "{A221E2DB-B16A-40E3-9C96-01FA14EB21B8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{01BC45AC-82B6-F913-AF01-AADEB9B9CFF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{01BC45AC-82B6-F913-AF01-AADEB9B9CFF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{01BC45AC-82B6-F913-AF01-AADEB9B9CFF6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A221E2DB-B16A-40E3-9C96-01FA14EB21B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A221E2DB-B16A-40E3-9C96-01FA14EB21B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A221E2DB-B16A-40E3-9C96-01FA14EB21B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A221E2DB-B16A-40E3-9C96-01FA14EB21B8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -54,6 +60,7 @@ Global
 		{C1ED9043-3AAE-428C-878F-FF020035CC72} = {2631D394-5EBC-4ED0-8B67-9AD535C9C4F8}
 		{D51B2A36-F5BE-420B-AAE1-7D37B29FB99C} = {2631D394-5EBC-4ED0-8B67-9AD535C9C4F8}
 		{01BC45AC-82B6-F913-AF01-AADEB9B9CFF6} = {3A15CCCA-89DD-4DA8-A917-A5EB167B9502}
+		{A221E2DB-B16A-40E3-9C96-01FA14EB21B8} = {3A15CCCA-89DD-4DA8-A917-A5EB167B9502}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {296E3FD2-43DC-4726-B475-F30EE55A8158}

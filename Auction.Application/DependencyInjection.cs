@@ -16,7 +16,7 @@ namespace Auction.Application
             services.AddAutoMapper(conf
                 => conf.AddProfile(new AssemblyMappingProfile(Assembly.GetExecutingAssembly())));
 
-            services.AddTransient<IJwtProvider>(provider => new JwtProvider.JwtProvider(configuration));
+            //services.AddTransient<IJwtProvider>(provider => new JwtProvider.JwtProvider(configuration));
 
             return services;
         }
