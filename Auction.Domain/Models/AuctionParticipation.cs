@@ -15,7 +15,7 @@ namespace Auction.Domain.Models
         public Guid UserId { get; set; }
         public User User { get; set; }
 
-        public long BidPrice { get; set; }
+        public double BidPrice { get; set; }
         public DateTime BidTime { get; set; }
     }
 

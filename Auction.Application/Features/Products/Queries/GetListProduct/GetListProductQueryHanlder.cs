@@ -1,6 +1,5 @@
-﻿using Auction.Application.Common.Exceptions;
-using Auction.Application.Common.Models;
-using Auction.Application.Common.Models.Vm.Products;
+﻿
+using Auction.Application.Common.Models.Vm.Products.GetList;
 using Auction.Application.Features.Products.Queries.GetAll;
 using Auction.Application.Interfaces;
 using Auction.Domain.Models;
@@ -36,11 +35,6 @@ namespace Auction.Application.Features.Products.Queries.GetListProduct
                     DateCreate = a.Product.DateCreate,
                     Images = a.Product.Images.Select(i => i.Image).ToList()
                 }).ToListAsync();
-
-            /*var products = await _dbContext.Products
-                .Include(p => p.Images)
-                .Where(p => p.UserId == _userCurrentService.UserId)
-                .ToListAsync(cancellationToken);*/
 
             var listVms = new List<ProductListVm>();
 

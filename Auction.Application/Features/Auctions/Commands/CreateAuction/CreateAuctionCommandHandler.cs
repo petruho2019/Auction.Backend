@@ -23,6 +23,9 @@ namespace Auction.Application.Features.Auctions.Commands.CreateAuction
         CreateAuctionCommand request,
         CancellationToken ct)
         {
+            if (request.Price < 0)
+                return CreateFailureResult<CreateAuctionVm>(
+                    "'Цена' не может быть меньше либо равнятся 0");
 
             if (request.DateEnd < request.DateStart)
                 return CreateFailureResult<CreateAuctionVm>(
@@ -34,7 +37,7 @@ namespace Auction.Application.Features.Auctions.Commands.CreateAuction
 
             var productInfo = await _dbContext.Products
                 .AsNoTracking()
-                .Where(p => p.Id == request.ProductId)
+                .Where(p => p.Id.Equals(request.ProductId))
                 .Select(p => new
                 {
                     p.Quantity,

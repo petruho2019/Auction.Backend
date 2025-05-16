@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Auction.Application.Common.Models.Vm.Products
+namespace Auction.Application.Common.Models.Vm.Products.GetList
 {
     public class ProductListVm : IMapWith<Product>
     {

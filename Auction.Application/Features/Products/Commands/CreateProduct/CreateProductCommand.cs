@@ -1,4 +1,4 @@
-﻿using Auction.Application.Common.Models.Vm.Products;
+﻿using Auction.Application.Common.Models.Vm.Products.Create;
 using MediatR;
 
 namespace Auction.Application.Features.Products.Commands.CreateProduct

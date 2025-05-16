@@ -9,7 +9,7 @@ namespace Auction.Domain.Models
     public class Auction
     {
         public Guid Id { get; set; }
-        public long CurrentPrice { get; set; }
+        public double CurrentPrice { get; set; }
         public DateTime DateStart { get; set; }
         public DateTime DateEnd { get; set; }
         public int Quantity { get; set; }

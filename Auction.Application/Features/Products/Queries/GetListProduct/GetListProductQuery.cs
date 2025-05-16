@@ -1,4 +1,4 @@
-﻿using Auction.Application.Common.Models.Vm.Products;
+﻿using Auction.Application.Common.Models.Vm.Products.GetList;
 using Auction.Domain.Models;
 using MediatR;
 using System;

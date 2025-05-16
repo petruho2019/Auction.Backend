@@ -2,6 +2,7 @@
 using Auction.Application;
 using Auction.Application.Common.Mappings;
 using Auction.Application.Common.Services;
+using Auction.Application.Hubs.Auction;
 using Auction.Application.Interfaces;
 using Auction.Database;
 using Auction.JwtProvider;
@@ -62,6 +63,7 @@ internal class Program
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
         builder.Services.AddHttpContextAccessor();
+        builder.Services.AddSignalR();
 
         builder.Services.AddCors(conf =>
         {
@@ -101,6 +103,8 @@ internal class Program
         app.UseStaticFiles();
 
         app.MapControllers();
+
+        app.MapHub<AuctionHub>("hubs/auction");
 
         app.UseCors("Test");
 

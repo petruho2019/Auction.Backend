@@ -1,5 +1,7 @@
 ﻿using Auction.Application.Common.Models.Dto.Auction;
+using Auction.Application.Common.Models.Vm.Auctions.GetById;
 using Auction.Application.Features.Auctions.Commands.CreateAuction;
+using Auction.Application.Features.Auctions.Queries.GetById;
 using Auction.Application.Features.Auctions.Queries.GetListAuction;
 using AutoMapper;
 using MediatR;
@@ -28,6 +30,17 @@ namespace Auction.WebApi.Controllers.Auction
             }
 
             return Ok(createResult.Data);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(string id)
+        {
+            var result = await _mediator.Send(new GetAuctionByIdQuery() { AuctionId = id });
+
+            if (!result.IsSuccess)
+                return BadRequest(result.ErrorMessage);
+
+            return Ok(result.Data);
         }
 
         [HttpGet("")]

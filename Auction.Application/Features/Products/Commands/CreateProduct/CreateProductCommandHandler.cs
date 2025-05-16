@@ -1,4 +1,4 @@
-﻿using Auction.Application.Common.Models.Vm.Products;
+﻿using Auction.Application.Common.Models.Vm.Products.Create;
 using Auction.Application.Interfaces;
 using Auction.Domain.Models;
 using AutoMapper;

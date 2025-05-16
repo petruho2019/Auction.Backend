@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Auction.Application.Common.Models.Vm.Auctions.GetList
+namespace Auction.Application.Common.Models.Vm.Auctions.Create
 {
-    public class ProductAuctionVm
+    public class ProductCreateAuctionVm
     {
         public string Name { get; set; }
         public string? Description { get; set; }

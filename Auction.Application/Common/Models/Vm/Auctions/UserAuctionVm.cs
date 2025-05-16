@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Auction.Application.Common.Models.Vm.Auctions.GetList
+namespace Auction.Application.Common.Models.Vm.Auctions
 {
-    public class UserActionVm
+    public class UserAuctionVm
     {
         public string Username { get; set; }
         public string Email { get; set; }

@@ -16,6 +16,7 @@ namespace Auction.Database
         public virtual DbSet<Product> Products { get; set; } = null!;
         public virtual DbSet<ProductImage> ProductImages { get; set; } = null!;
         public DbSet<Domain.Models.Auction> Auctions { get; set; } = null!;
+        public DbSet<AuctionParticipation> AuctionParticipations { get; set; }
 
         public AuctionContext(DbContextOptions options) : base(options)
         {

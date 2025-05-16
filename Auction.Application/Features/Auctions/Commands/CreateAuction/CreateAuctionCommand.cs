@@ -11,7 +11,7 @@ namespace Auction.Application.Features.Auctions.Commands.CreateAuction
 {
     public class CreateAuctionCommand : IRequest<Result<CreateAuctionVm>>
     {
-        public long Price { get; set; }
+        public double Price { get; set; }
         public DateTime DateStart { get; set; }
         public DateTime DateEnd { get; set; }
         public int Quantity { get; set; }

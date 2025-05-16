@@ -17,7 +17,7 @@ namespace Auction.Application.Common.Models.Dto.Auction
     {
         [Required(ErrorMessage = "Поле 'Цена' обязательно для заполнения")]
         [NotZero]
-        public long Price { get; set; }
+        public double Price { get; set; }
 
         [Required(ErrorMessage = "Поле 'Дата начала' обязательно для заполнения")]
         [ValidStartDate]
