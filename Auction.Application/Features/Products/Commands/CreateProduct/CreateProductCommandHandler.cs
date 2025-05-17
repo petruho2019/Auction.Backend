@@ -28,7 +28,7 @@ namespace Auction.Application.Features.Products.Commands.CreateProduct
                 Description = request.Description,
                 Location = request.Location,
                 Quantity = request.Quantity,
-                UserId = _userCurrentService.UserId,
+                UserId = _currentUserService.UserId,
             };
 
             var images = new List<ProductImage>();

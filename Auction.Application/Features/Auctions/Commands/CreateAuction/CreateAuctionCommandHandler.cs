@@ -37,7 +37,7 @@ namespace Auction.Application.Features.Auctions.Commands.CreateAuction
 
             var productInfo = await _dbContext.Products
                 .AsNoTracking()
-                .Where(p => p.Id.Equals(request.ProductId))
+                .Where(p => p.Id.Equals(request.ProductId) && p.UserId.Equals(_currentUserService.UserId))
                 .Select(p => new
                 {
                     p.Quantity,
@@ -56,12 +56,15 @@ namespace Auction.Application.Features.Auctions.Commands.CreateAuction
 
             var creatorDto = await _dbContext.Users
                 .AsNoTracking()
-                .Where(u => u.Id == _userCurrentService.UserId)
+                .Where(u => u.Id == _currentUserService.UserId)
                 .Select(u => new { u.Id, u.Username, u.Email })
                 .FirstOrDefaultAsync(ct);
 
             if (creatorDto is null)
                 return CreateFailureResult<CreateAuctionVm>("Пользователь не найден");
+
+            DateTime unspecifiedStart = DateTime.SpecifyKind(request.DateStart, DateTimeKind.Unspecified);
+            DateTime unspecifiedEnd = DateTime.SpecifyKind(request.DateEnd, DateTimeKind.Unspecified);
 
             var auction = new Domain.Models.Auction
             {
@@ -69,10 +72,11 @@ namespace Auction.Application.Features.Auctions.Commands.CreateAuction
                 CreatorId = creatorDto.Id,
                 ProductId = request.ProductId,
                 CurrentPrice = request.Price,
-                DateStart = request.DateStart,
-                DateEnd = request.DateEnd,
+                DateStart = unspecifiedStart,
+                DateEnd = unspecifiedEnd,
                 Quantity = request.Quantity
             };
+
 
             await _dbContext.Auctions.AddAsync(auction, ct);
             await _dbContext.SaveChangesAsync(ct);

@@ -2,6 +2,7 @@
 using Auction.Application;
 using Auction.Application.Common.Mappings;
 using Auction.Application.Common.Services;
+using Auction.Application.Common.Services.BackgroundServices;
 using Auction.Application.Hubs.Auction;
 using Auction.Application.Interfaces;
 using Auction.Database;
@@ -25,6 +26,8 @@ internal class Program
         builder.Services.AddApplication(builder.Configuration);
         builder.Services.AddJwtProvider(builder.Configuration);
         builder.Services.AddAuctionContext(builder.Configuration);
+        builder.Services.AddHttpClient();
+
         builder.Services.AddAutoMapper(conf =>
         {
             conf.AddProfile(new AssemblyMappingProfile(Assembly.GetExecutingAssembly()));
@@ -67,7 +70,7 @@ internal class Program
 
         builder.Services.AddCors(conf =>
         {
-            conf.AddPolicy("Test", policy =>
+            conf.AddPolicy("Main", policy =>
             {
                 policy.AllowAnyHeader();
                 policy.AllowAnyMethod();
@@ -78,6 +81,7 @@ internal class Program
         });
 
         builder.Services.AddTransient<ICurrentUserService, CurrentUserService>();
+        builder.Services.AddHostedService<AuctionEndedCheckerService>();
 
         var app = builder.Build();
 
@@ -106,7 +110,7 @@ internal class Program
 
         app.MapHub<AuctionHub>("hubs/auction");
 
-        app.UseCors("Test");
+        app.UseCors("Main");
 
         app.Run();
     }

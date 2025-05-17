@@ -20,7 +20,7 @@ namespace Auction.Application.Features.Users.Queries.GetUserInfoFromToken
 
         public async Task<UserInfoVm> Handle(GetUserInfoQuery request, CancellationToken cancellationToken)
         {
-            var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Id.Equals(_userCurrentService.UserId)!);
+            var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Id.Equals(_currentUserService.UserId)!);
 
             return new() 
             { 

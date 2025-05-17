@@ -47,7 +47,7 @@ namespace Auction.Application.Features.AuctionParticipstions.Commands
             {
                 Id = Guid.NewGuid(),
                 AuctionId = auctionId,
-                UserId = _userCurrentService.UserId,
+                UserId = _currentUserService.UserId,
                 BidPrice = request.BidPrice,
                 BidTime = DateTime.UtcNow
             };
@@ -55,7 +55,7 @@ namespace Auction.Application.Features.AuctionParticipstions.Commands
             var auctionFromDb = await _dbContext.Auctions.FirstOrDefaultAsync(a => a.Id.Equals(auctionId), cancellationToken)!;
             auctionFromDb!.CurrentPrice = request.BidPrice;
 
-            await _dbContext.Users.FirstOrDefaultAsync(u => u.Id == _userCurrentService.UserId, cancellationToken: cancellationToken);
+            await _dbContext.Users.FirstOrDefaultAsync(u => u.Id == _currentUserService.UserId, cancellationToken: cancellationToken);
 
             await _dbContext.AuctionParticipations.AddAsync(auctionParticipation, cancellationToken);
             await _dbContext.SaveChangesAsync(cancellationToken);

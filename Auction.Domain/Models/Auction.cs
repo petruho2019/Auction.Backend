@@ -13,6 +13,7 @@ namespace Auction.Domain.Models
         public DateTime DateStart { get; set; }
         public DateTime DateEnd { get; set; }
         public int Quantity { get; set; }
+        public bool IsEnded { get; set; }
 
         public Guid? BuyerId { get; set; }
         public User? Buyer { get; set; }

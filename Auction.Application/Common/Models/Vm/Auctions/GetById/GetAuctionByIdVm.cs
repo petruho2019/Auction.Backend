@@ -15,6 +15,7 @@ namespace Auction.Application.Common.Models.Vm.Auctions.GetById
         public int Quantity { get; set; }
         public DateTime DateStart { get; set; }
         public DateTime DateEnd { get; set; }
+        public bool IsEnded { get; set; }
         public ProductGetAuctionByIdVm Product { get; set; }
         public UserAuctionVm Creator { get; set; }
         public List<AuctionParticipationsGetAuctionByIdVm> AuctionParticipations { get; set; }
@@ -27,6 +28,7 @@ namespace Auction.Application.Common.Models.Vm.Auctions.GetById
                 .ForMember(vm => vm.DateStart, opt => opt.MapFrom(a => a.DateStart))
                 .ForMember(vm => vm.DateEnd, opt => opt.MapFrom(a => a.DateEnd))
                 .ForMember(vm => vm.AuctionParticipations, opt => opt.MapFrom(a => a.Participations))
+                .ForMember(vm => vm.IsEnded, opt => opt.MapFrom(a => a.IsEnded))
                 .ForPath(vm => vm.Product.Name, opt => opt.MapFrom(a => a.Product.Name))
                 .ForPath(vm => vm.Product.Description, opt => opt.MapFrom(a => a.Product.Description))
                 .ForPath(vm => vm.Product.Location, opt => opt.MapFrom(a => a.Product.Location))

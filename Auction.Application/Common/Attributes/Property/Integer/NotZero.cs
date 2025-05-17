@@ -10,21 +10,20 @@ namespace Auction.Application.Common.Attributes.Property.Integer
         {
             string fieldName = validationContext.DisplayName;
 
+            if (value is double doubleValue)
+            {
+                if (doubleValue <= 0)
+                {
+                    return new ValidationResult($"{fieldName} не может быть {(doubleValue == 0 ? "равен 0" : "отрицательным")}");
+                }
+
+                return ValidationResult.Success;
+            }
             if (value is int intValue)
             {
                 if (intValue <= 0)
                 {
                     return new ValidationResult($"{fieldName} не может быть {(intValue == 0 ? "равен 0" : "отрицательным")}");
-                }
-
-                return ValidationResult.Success;
-            }
-
-            if (value is long longValue)
-            {
-                if (longValue <= 0)
-                {
-                    return new ValidationResult($"{fieldName} не может быть {(longValue == 0 ? "равен 0" : "отрицательным")}");
                 }
 
                 return ValidationResult.Success;

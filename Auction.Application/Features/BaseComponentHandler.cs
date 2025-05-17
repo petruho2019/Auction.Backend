@@ -14,7 +14,7 @@ namespace Auction.Application.Features
     {
         public readonly IAuctionContext _dbContext;
         public readonly IMapper _mapper;
-        public readonly ICurrentUserService _userCurrentService;
+        public readonly ICurrentUserService _currentUserService;
         public BaseComponentHandler(
             IAuctionContext dbContext, 
             IMapper mapper, 
@@ -22,7 +22,7 @@ namespace Auction.Application.Features
         {
             _dbContext = dbContext;
             _mapper = mapper;
-            _userCurrentService = currentUserService;
+            _currentUserService = currentUserService;
         }
 
         public Result<T> CreateSuccessResult<T>(T data)
@@ -40,6 +40,20 @@ namespace Auction.Application.Features
                 ErrorMessage = errorMessage,
                 IsSuccess = false
             };
+        }
+
+        public Result CreateFailureResult(string errorMessage)
+        {
+            return new Result()
+            {
+                ErrorMessage = errorMessage,
+                IsSuccess = false
+            };
+        }
+
+        public Result CreateSuccessResult()
+        {
+            return new();
         }
     }
 }

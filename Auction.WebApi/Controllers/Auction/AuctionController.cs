@@ -1,6 +1,7 @@
 ﻿using Auction.Application.Common.Models.Dto.Auction;
 using Auction.Application.Common.Models.Vm.Auctions.GetById;
 using Auction.Application.Features.Auctions.Commands.CreateAuction;
+using Auction.Application.Features.Auctions.Commands.EndAction;
 using Auction.Application.Features.Auctions.Queries.GetById;
 using Auction.Application.Features.Auctions.Queries.GetListAuction;
 using AutoMapper;

@@ -14,6 +14,8 @@ namespace Auction.Database.EntityTypeConfiguration
         {
             builder.HasKey(a => a.Id).HasName("Auction_pkey");
             builder.ToTable("Auction");
+            builder.Property(a => a.DateStart).HasColumnType("timestamp without time zone");
+            builder.Property(a => a.DateEnd).HasColumnType("timestamp without time zone");
 
             builder
                 .HasOne(a => a.Buyer)
