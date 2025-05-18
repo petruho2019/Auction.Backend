@@ -20,5 +20,7 @@ namespace Auction.Domain.Models
         public List<Auction> CretedAuctions { get; set; }
 
         public List<AuctionParticipation> Participations { get; set; }
+
+        public List<RefreshToken> RefreshTokens { get; set; }
     }
 }

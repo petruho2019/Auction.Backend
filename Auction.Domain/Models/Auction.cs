@@ -10,8 +10,8 @@ namespace Auction.Domain.Models
     {
         public Guid Id { get; set; }
         public double CurrentPrice { get; set; }
-        public DateTime DateStart { get; set; }
-        public DateTime DateEnd { get; set; }
+        public DateTime Start { get; set; }
+        public DateTime End { get; set; }
         public int Quantity { get; set; }
         public bool IsEnded { get; set; }
 

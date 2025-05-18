@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Auction.Application.Attributes.Class.Filters;
+using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,6 +13,7 @@ namespace Auction.WebApi.Controllers
         {
             _mediator = mediator;
             _mapper = mapper;
+            
         }
 
     }

@@ -15,10 +15,8 @@ namespace Auction.Application.Features.Users.Commands.Login
 {
     public class LoginUserCommandHandler : BaseComponentHandler, IRequestHandler<LoginUserCommand, Result<UserAuth>>
     {
-        public IJwtProvider _jwtProvider { get; set; }
-        public LoginUserCommandHandler(IAuctionContext dbContext, IMapper mapper, IJwtProvider jwtProvider, ICurrentUserService currentUserService) : base(dbContext, mapper, currentUserService)
+        public LoginUserCommandHandler(IAuctionContext dbContext, IMapper mapper, ICurrentUserService currentUserService) : base(dbContext, mapper, currentUserService)
         {
-            _jwtProvider = jwtProvider;
         }
 
         public async Task<Result<UserAuth>> Handle(LoginUserCommand request, CancellationToken cancellationToken)
@@ -30,10 +28,7 @@ namespace Auction.Application.Features.Users.Commands.Login
             if (!BCrypt.Net.BCrypt.Verify(request.Password, user.Password))
                 return CreateFailureResult<UserAuth>("Не верный пароль");
 
-            var userVm = _mapper.Map<UserAuth>(user);
-            userVm.Token = _jwtProvider.GenerateToken(user);
-
-            return CreateSuccessResult(userVm);
+            return CreateSuccessResult(_mapper.Map<UserAuth>(user));
         }
     }
 }

@@ -27,7 +27,7 @@ namespace Auction.Application.Common.Models.Vm.Products.GetList
                 .ForMember(plv => plv.Description, opt => opt.MapFrom(p => p.Description))
                 .ForMember(plv => plv.Location, opt => opt.MapFrom(p => p.Location))
                 .ForMember(plv => plv.Quantity, opt => opt.MapFrom(p => p.Quantity))
-                .ForMember(plv => plv.DateCreate, opt => opt.MapFrom(p => p.DateCreate))
+                .ForMember(plv => plv.DateCreate, opt => opt.MapFrom(p => p.Created))
                 .ForMember(plv => plv.Images, opt => opt.MapFrom(p => p.Images.Select(i => i.Image).ToList()));
         }
     }

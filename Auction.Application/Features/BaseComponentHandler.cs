@@ -16,8 +16,8 @@ namespace Auction.Application.Features
         public readonly IMapper _mapper;
         public readonly ICurrentUserService _currentUserService;
         public BaseComponentHandler(
-            IAuctionContext dbContext, 
-            IMapper mapper, 
+            IAuctionContext dbContext,
+            IMapper mapper,
             ICurrentUserService currentUserService)
         {
             _dbContext = dbContext;
@@ -53,7 +53,8 @@ namespace Auction.Application.Features
 
         public Result CreateSuccessResult()
         {
-            return new();
+            return new() { IsSuccess = true };
+
         }
     }
 }

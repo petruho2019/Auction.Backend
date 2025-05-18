@@ -26,7 +26,7 @@ namespace Auction.Application.Features.Auctions.Commands.EndAction
 
             if (auctionFromDb == null)
                 return CreateFailureResult("Аукцион не найден");
-            if (auctionFromDb.IsEnded && (auctionFromDb.DateEnd < DateTime.Now))
+            if (auctionFromDb.IsEnded && (auctionFromDb.End < DateTime.Now))
                 return CreateFailureResult("Auction doesn't ended");
 
             var maxBid = _dbContext.AuctionParticipations

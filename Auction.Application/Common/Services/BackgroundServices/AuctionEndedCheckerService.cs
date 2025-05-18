@@ -40,7 +40,7 @@ namespace Auction.Application.Common.Services.BackgroundServices
             var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
 
             var endedAuctions = await dbContext.Auctions
-                .Where(a => a.DateEnd <= DateTime.Now && !a.IsEnded)
+                .Where(a => a.End <= DateTime.Now && !a.IsEnded)
                 .ToListAsync();
 
             foreach (var auction in endedAuctions)

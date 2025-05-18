@@ -13,7 +13,7 @@ namespace Auction.Application.Common.Attributes.Property.Date
         {
             if (value is DateTime dateTime)
             {
-                if ((dateTime - (DateTime.Now - TimeSpan.FromMinutes(5)) ) < TimeSpan.Zero)
+                if ((dateTime - (DateTime.Now - TimeSpan.FromMinutes(2)) ) < TimeSpan.Zero)
                 {
                     ErrorMessage = "'Дата начала' не может быть раньше текущего времени";
                     return false;

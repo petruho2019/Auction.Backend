@@ -19,7 +19,7 @@ namespace Auction.Database.EntityTypeConfiguration
             builder.Property(p => p.Name).IsRequired();
             builder.Property(p => p.Description).HasColumnType("text");
             builder.Property(p => p.Location).IsRequired();
-            builder.Property(p => p.DateCreate).HasColumnType("timestamp without time zone");
+            builder.Property(p => p.Created).HasColumnType("timestamp without time zone");
 
 
             builder

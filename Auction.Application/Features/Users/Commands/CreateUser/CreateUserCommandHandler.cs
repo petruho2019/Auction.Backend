@@ -9,10 +9,8 @@ namespace Auction.Application.Features.Users.Commands.CreateUser
 {
     public class CreateUserCommandHandler : BaseComponentHandler, IRequestHandler<CreateUserCommand, Result<UserAuth>>
     {
-        public IJwtProvider _jwtProvider { get; set; }
-        public CreateUserCommandHandler(IAuctionContext dbContext, IMapper mapper, IJwtProvider jwtProvider, ICurrentUserService currentUserService) : base(dbContext, mapper, currentUserService)
+        public CreateUserCommandHandler(IAuctionContext dbContext, IMapper mapper, ICurrentUserService currentUserService) : base(dbContext, mapper, currentUserService)
         {
-            _jwtProvider = jwtProvider;
         }
 
         public async Task<Result<UserAuth>> Handle(CreateUserCommand request, CancellationToken cancellationToken)
@@ -33,10 +31,7 @@ namespace Auction.Application.Features.Users.Commands.CreateUser
             await _dbContext.Users.AddAsync(user);
             await _dbContext.SaveChangesAsync(default);
 
-            var userVm = _mapper.Map<UserAuth>(user);
-            userVm.Token = _jwtProvider.GenerateToken(user);
-
-            return CreateSuccessResult(userVm);
+            return CreateSuccessResult(_mapper.Map<UserAuth>(user));
         }
     }
 }

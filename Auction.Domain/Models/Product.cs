@@ -14,7 +14,9 @@ namespace Auction.Domain.Models
         public string? Description { get; set; }
         public string Location { get; set; }
         public int Quantity { get; set; }
-        public DateTime DateCreate { get; set; } = DateTime.UtcNow;
+        public DateTime Created { get; set; } = DateTime.UtcNow;
+
+        // TODO можно ли изменить на Owner?
         public Guid UserId { get; set; }
         public User User { get; set; }
 

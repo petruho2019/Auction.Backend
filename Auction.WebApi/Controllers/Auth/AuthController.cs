@@ -1,10 +1,13 @@
 ﻿using Auction.Application.Common.Models;
 using Auction.Application.Common.Models.Dto.Users;
 using Auction.Application.Common.Models.Vm.Users.Auth;
+using Auction.Application.Features.Tokens.Commands.CreateRefreshToken;
 using Auction.Application.Features.Users.Commands.CreateUser;
 using Auction.Application.Features.Users.Commands.Login;
+using Auction.Application.Interfaces;
 using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,10 +15,13 @@ namespace Auction.WebApi.Controllers.Auth
 {
     [Route("/api/[controller]")]
     [ApiController]
+    [Authorize]
     public class AuthController : BaseController
     {
-        public AuthController(IMediator mediator, IMapper mapper) : base(mediator, mapper)
+        private readonly IJwtProvider _jwtProvider;
+        public AuthController(IJwtProvider jwtProvider, IMediator mediator, IMapper mapper) : base(mediator, mapper)
         {
+            _jwtProvider = jwtProvider;
         }
 
         [HttpGet("check")]
@@ -29,14 +35,21 @@ namespace Auction.WebApi.Controllers.Auth
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] UserRegisterDto userDto)
         {
-            var createResult = await _mediator.Send(_mapper.Map<CreateUserCommand>(userDto));
+            var createUserResult = await _mediator.Send(_mapper.Map<CreateUserCommand>(userDto));
 
-            if (!createResult.IsSuccess)
-                return BadRequest(createResult.ErrorMessage);
+            if (!createUserResult.IsSuccess)
+                return BadRequest(createUserResult.ErrorMessage);
 
-            AppendTokenToCookie(Response, createResult.Data!.Token);
+            await _mediator.Send(new CreateRefreshTokenCommand()
+            {
+                Ip = HttpContext.Connection.LocalIpAddress!.ToString(),
+                UserId = createUserResult.Data!.UserId,
+                SkipDeviceLimitCheck = true
+            });
 
-            return Ok(_mapper.Map<UserVm>(createResult.Data));
+            AppendTokenToCookie(Response, _jwtProvider.GenerateToken(createUserResult.Data));
+
+            return Ok(_mapper.Map<UserVm>(createUserResult.Data));
         }
 
         [HttpPost("login")]
@@ -47,7 +60,7 @@ namespace Auction.WebApi.Controllers.Auth
             if (!loginResult.IsSuccess)
                 return BadRequest(loginResult.ErrorMessage);
 
-            AppendTokenToCookie(Response, loginResult.Data!.Token);
+            AppendTokenToCookie(Response, _jwtProvider.GenerateToken(loginResult.Data));
 
             return Ok(_mapper.Map<UserVm>(loginResult.Data));
         }

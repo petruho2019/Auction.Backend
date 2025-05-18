@@ -72,8 +72,8 @@ namespace Auction.Application.Features.Auctions.Commands.CreateAuction
                 CreatorId = creatorDto.Id,
                 ProductId = request.ProductId,
                 CurrentPrice = request.Price,
-                DateStart = unspecifiedStart,
-                DateEnd = unspecifiedEnd,
+                Start = unspecifiedStart,
+                End = unspecifiedEnd,
                 Quantity = request.Quantity
             };
 

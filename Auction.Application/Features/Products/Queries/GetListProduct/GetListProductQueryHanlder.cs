@@ -32,7 +32,7 @@ namespace Auction.Application.Features.Products.Queries.GetListProduct
                     Description = a.Product.Description,
                     Location = a.Product.Location,
                     Quantity = a.Product.Quantity - a.Product.Auctions.Sum(a => a.Quantity),
-                    DateCreate = a.Product.DateCreate,
+                    DateCreate = a.Product.Created,
                     Images = a.Product.Images.Select(i => i.Image).ToList()
                 }).ToListAsync();
 

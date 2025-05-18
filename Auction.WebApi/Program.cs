@@ -1,5 +1,6 @@
 
 using Auction.Application;
+using Auction.Application.Attributes.Class.Filters;
 using Auction.Application.Common.Mappings;
 using Auction.Application.Common.Services;
 using Auction.Application.Common.Services.BackgroundServices;
@@ -20,8 +21,6 @@ internal class Program
     private static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
-
-    
 
         builder.Services.AddApplication(builder.Configuration);
         builder.Services.AddJwtProvider(builder.Configuration);
@@ -61,7 +60,10 @@ internal class Program
                 };
             });
         builder.Services.AddAuthorization();
-        builder.Services.AddControllers();
+        builder.Services.AddControllers(opt =>
+        {
+            opt.Filters.Add<RefreshAndAccessCheckFilter>();
+        });
         builder.Services.AddMvc();
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
@@ -79,6 +81,7 @@ internal class Program
 
             });
         });
+
 
         builder.Services.AddTransient<ICurrentUserService, CurrentUserService>();
         builder.Services.AddHostedService<AuctionEndedCheckerService>();

@@ -28,6 +28,7 @@ namespace Auction.Application.Features.AuctionParticipstions.Commands
                 return CreateFailureResult<AuctionParticipationMakeABigVm>("'Ставка' не может быть меньше либо равнятся 0");
 
             var auctionId = Guid.Parse(request.AuctionId);
+
             // TODO спросить про проверку, зачем тут проверять если 100%
             // уверен что цена валидна в auction current price
             var maxBidFromAuctionParticipations = await _dbContext.AuctionParticipations

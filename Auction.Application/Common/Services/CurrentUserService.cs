@@ -17,8 +17,6 @@ namespace Auction.Application.Common.Services
         }
         public string Username => _contextAccessor.HttpContext.User.Identity!.Name!;
 
-        public Guid UserId => Guid.Parse(_contextAccessor.HttpContext.User.FindFirst("UUID")!.Value);
-
-        
+        public Guid UserId => Guid.Parse(_contextAccessor.HttpContext.User.FindFirst("ID")!.Value);
     }
 }
