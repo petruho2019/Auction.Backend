@@ -10,7 +10,7 @@ namespace Auction.JwtProvider
             IConfiguration configuration)
         {
 
-            services.AddTransient<IJwtProvider>(provider => new JwtProvider(configuration));
+            services.AddTransient<IJwtProvider, JwtProvider>();
 
             return services;
         }

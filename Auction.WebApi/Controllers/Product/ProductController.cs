@@ -5,23 +5,21 @@ using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 
 namespace Auction.WebApi.Controllers.Product
 {
     [ApiController]
     [Route("/api/[controller]")]
     [Authorize]
-    public class ProductController : BaseController
+    public class ProductController(IMediator mediator, IMapper mapper) : BaseController(mediator, mapper)
     {
-        public ProductController(IMediator mediator, IMapper mapper) : base(mediator, mapper)
-        {
-        }
 
         [Route("create")]
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateProductDto createProductDto)
         {
-            var productVm = await _mediator.Send(_mapper.Map<CreateProductCommand>(createProductDto));
+            var productVm = await mediator.Send(mapper.Map<CreateProductCommand>(createProductDto));
 
             return Ok(productVm);
         }
@@ -30,7 +28,8 @@ namespace Auction.WebApi.Controllers.Product
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var products = await _mediator.Send(new GetListProductQuery());
+
+            var products = await mediator.Send(new GetListProductQuery());
             return Ok(products);
         }
     }

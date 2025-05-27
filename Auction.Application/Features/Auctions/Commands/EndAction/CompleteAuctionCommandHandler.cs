@@ -1,35 +1,25 @@
 ﻿using Auction.Application.Common.Models;
-using Auction.Application.Common.Models.Vm.Auctions;
 using Auction.Application.Interfaces;
 using AutoMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Auction.Application.Features.Auctions.Commands.EndAction
 {
-    public class CompleteAuctionCommandHandler : BaseComponentHandler, IRequestHandler<CompleteAuctionCommand, Result>
+    public class CompleteAuctionCommandHandler(IAuctionContext dbContext, IMapper mapper, ICurrentUserService currentUserService) : IRequestHandler<CompleteAuctionCommand, Result>
     {
-        public CompleteAuctionCommandHandler(IAuctionContext dbContext, IMapper mapper, ICurrentUserService currentUserService) : base(dbContext, mapper, currentUserService)
-        {
-        }
-
         public async Task<Result> Handle(CompleteAuctionCommand request, CancellationToken cancellationToken)
         {
             // TODO возможно не нужная проверка, тк мы отпраляет этот запрос с сервера
             // перед отправкой получаем auctions из бд, так что 100% что id верно
-            var auctionFromDb = await _dbContext.Auctions.FirstOrDefaultAsync(a => a.Id.Equals(request.AuctionId), cancellationToken);
+            var auctionFromDb = await dbContext.Auctions.FirstOrDefaultAsync(a => a.Id.Equals(request.AuctionId), cancellationToken);
 
             if (auctionFromDb == null)
-                return CreateFailureResult("Аукцион не найден");
+                return Result.BadRequest("Аукцион не найден");
             if (auctionFromDb.IsEnded && (auctionFromDb.End < DateTime.Now))
-                return CreateFailureResult("Auction doesn't ended");
+                return Result.BadRequest("Auction doesn't ended");
 
-            var maxBid = _dbContext.AuctionParticipations
+            var maxBid = dbContext.AuctionParticipations
                 .Select(ap => ap.BidTime);
 
 
@@ -38,12 +28,12 @@ namespace Auction.Application.Features.Auctions.Commands.EndAction
             {
                 auctionFromDb.IsEnded = true;
 
-                await _dbContext.SaveChangesAsync(cancellationToken);
-                return CreateSuccessResult();
+                await dbContext.SaveChangesAsync(cancellationToken);
+                return Result.NoContent();
             }
                  
 
-            var buyer = await _dbContext.AuctionParticipations
+            var buyer = await dbContext.AuctionParticipations
                 .Include(ap => ap.User)
                 .Where(ap => (ap.AuctionId.Equals(request.AuctionId)) && (ap.BidTime == maxBid.Max()))
                 .Select(ap => new 
@@ -54,9 +44,9 @@ namespace Auction.Application.Features.Auctions.Commands.EndAction
             auctionFromDb.BuyerId = buyer.BuyerId;
             auctionFromDb.IsEnded = true;
 
-            await _dbContext.SaveChangesAsync(cancellationToken);
+            await dbContext.SaveChangesAsync(cancellationToken);
 
-            return CreateSuccessResult();
+            return Result.NoContent();
         }
     }
 }

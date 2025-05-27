@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Auction.Domain.Models
+﻿namespace Auction.Domain.Models
 {
-    public class AuctionParticipation
+    public record AuctionParticipation
     {
         public Guid Id { get; set; }
         public Guid AuctionId { get; set; }

@@ -2,12 +2,6 @@
 using Auction.Application.Common.Models.Vm.Users.Auth;
 using Auction.Application.Features.Users.Commands.Login;
 using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Auction.Application.Common.Models.Dto.Users
 {

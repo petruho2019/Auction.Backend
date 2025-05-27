@@ -1,4 +1,6 @@
-﻿using Auction.Application.Common.Models.Dto.Auction;
+﻿using Auction.Application.Common.Extensions;
+using Auction.Application.Common.Models.Dto.Auction;
+using Auction.Application.Common.Models.Vm.Auctions.Create;
 using Auction.Application.Common.Models.Vm.Auctions.GetById;
 using Auction.Application.Features.Auctions.Commands.CreateAuction;
 using Auction.Application.Features.Auctions.Commands.EndAction;
@@ -8,46 +10,46 @@ using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 
 namespace Auction.WebApi.Controllers.Auction
 {
     [ApiController]
     [Route("/api/[controller]")]
     [Authorize]
-    public class AuctionController : BaseController
+    public class AuctionController(IMediator mediator, IMapper mapper) : BaseController(mediator, mapper)
     {
-        public AuctionController(IMediator mediator, IMapper mapper) : base(mediator, mapper)
-        {
-        }
 
         [HttpPost("create")]
         public async Task<IActionResult> Create([FromBody] CreateAuctionDto dto)
         {
-            var createResult = await _mediator.Send(_mapper.Map<CreateAuctionCommand>(dto));
+            var createResult = await mediator.Send(mapper.Map<CreateAuctionCommand>(dto));
 
             if (!createResult.IsSuccess)
             {
-                return BadRequest(createResult.ErrorMessage);
+                return ToActionResultError(createResult.Error);
             }
 
-            return Ok(createResult.Data);
+            return ToActionResultSuccess(createResult.Success);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(string id)
         {
-            var result = await _mediator.Send(new GetAuctionByIdQuery() { AuctionId = id });
+            var result = await mediator.Send(new GetAuctionByIdQuery() { AuctionId = id });
 
             if (!result.IsSuccess)
-                return BadRequest(result.ErrorMessage);
+                return ToActionResultError(result.Error);
 
-            return Ok(result.Data);
+            return ToActionResultSuccess(result.Success);
         }
 
         [HttpGet("")]
         public async Task<IActionResult> GetList()
         {
-            var listAuctions = await _mediator.Send(new GetListAuctionsQuery());
+            Console.WriteLine(Activity.Current.GetTagItem("UserId"));
+
+            var listAuctions = await mediator.Send(new GetListAuctionsQuery());
 
             return Ok(listAuctions);
         }

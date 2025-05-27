@@ -1,0 +1,53 @@
+services:
+  auction.webapi:
+    env_file: ".env"
+    image: ${DOCKER_REGISTRY-}auctionwebapi
+    networks:
+        - main
+    ports:
+      - "${WAKEUP_SERVICES_HTTP_PORT:-1180}:${WAKEUP_SERVICES_HTTP_PORT:-1180}"
+    build:
+      context: .
+      dockerfile: Auction.WebApi/Dockerfile
+    depends_on:
+        - auction.database
+        - auction.redis
+
+  auction.database:
+    image: postgres
+    ports:
+        - "5432:5432"
+    volumes:
+        - db:/auction/db
+    networks:
+        - main
+    environment:
+        POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+        POSTGRES_USER: ${POSTGRES_USER}
+        POSTGRES_DB: ${POSTGRES_DB}
+
+  auction.redis:
+    image: redis:latest
+    ports:
+      - "6380:6379"
+    volumes:
+      - redis:/auction/redis
+    networks:
+      - main
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "$REDIS_PASSWORD", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    restart: always
+
+
+networks:
+  main: 
+    driver: bridge
+
+volumes:
+  webapi:
+  db:
+  redis:
+      

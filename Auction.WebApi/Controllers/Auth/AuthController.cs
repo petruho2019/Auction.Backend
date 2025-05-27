@@ -1,4 +1,4 @@
-﻿using Auction.Application.Common.Models;
+﻿using Auction.Application.Common.Extensions;
 using Auction.Application.Common.Models.Dto.Users;
 using Auction.Application.Common.Models.Vm.Users.Auth;
 using Auction.Application.Features.Tokens.Commands.CreateRefreshToken;
@@ -7,23 +7,14 @@ using Auction.Application.Features.Users.Commands.Login;
 using Auction.Application.Interfaces;
 using AutoMapper;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Auction.WebApi.Controllers.Auth
 {
     [Route("/api/[controller]")]
     [ApiController]
-    [Authorize]
-    public class AuthController : BaseController
+    public class AuthController(IJwtProvider jwtProvider, IMediator mediator, IMapper mapper) : BaseController(mediator, mapper)
     {
-        private readonly IJwtProvider _jwtProvider;
-        public AuthController(IJwtProvider jwtProvider, IMediator mediator, IMapper mapper) : base(mediator, mapper)
-        {
-            _jwtProvider = jwtProvider;
-        }
-
         [HttpGet("check")]
         public IActionResult CheckAuth()
         {
@@ -35,34 +26,34 @@ namespace Auction.WebApi.Controllers.Auth
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] UserRegisterDto userDto)
         {
-            var createUserResult = await _mediator.Send(_mapper.Map<CreateUserCommand>(userDto));
+            var createUserResult = await mediator.Send(mapper.Map<CreateUserCommand>(userDto));
 
             if (!createUserResult.IsSuccess)
-                return BadRequest(createUserResult.ErrorMessage);
+                return ToActionResultError(createUserResult.Error);
 
-            await _mediator.Send(new CreateRefreshTokenCommand()
+            await mediator.Send(new CreateRefreshTokenCommand()
             {
                 Ip = HttpContext.Connection.LocalIpAddress!.ToString(),
-                UserId = createUserResult.Data!.UserId,
+                UserId = createUserResult.Success!.Data!.UserId,
                 SkipDeviceLimitCheck = true
             });
 
-            AppendTokenToCookie(Response, _jwtProvider.GenerateToken(createUserResult.Data));
+            AppendTokenToCookie(Response, jwtProvider.GenerateToken(createUserResult.Success.Data));
 
-            return Ok(_mapper.Map<UserVm>(createUserResult.Data));
+            return ToActionResultSuccess(mapper.Map<UserVm>(createUserResult.Success.Data), createUserResult.Success.StatusCode);
         }
 
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] UserLoginDto userDto)
         {
-            var loginResult = await _mediator.Send(_mapper.Map<LoginUserCommand>(userDto));
+            var loginResult = await mediator.Send(mapper.Map<LoginUserCommand>(userDto));
 
             if (!loginResult.IsSuccess)
-                return BadRequest(loginResult.ErrorMessage);
+                return ToActionResultError(loginResult.Error);
 
-            AppendTokenToCookie(Response, _jwtProvider.GenerateToken(loginResult.Data));
+            AppendTokenToCookie(Response, jwtProvider.GenerateToken(loginResult.Success.Data));
 
-            return Ok(_mapper.Map<UserVm>(loginResult.Data));
+            return ToActionResultSuccess(mapper.Map<UserVm>(loginResult.Success.Data), loginResult.Success.StatusCode);
         }
 
         [HttpPost("logout")]
@@ -74,7 +65,7 @@ namespace Auction.WebApi.Controllers.Auth
 
         private void DeleteTokenFromCookie(HttpResponse response)
         {
-            response.Cookies.Delete("auction-token", new CookieOptions()
+            response.Cookies.Delete("auction-access", new CookieOptions()
             {
                 Path = "/",
                 SameSite = SameSiteMode.None,

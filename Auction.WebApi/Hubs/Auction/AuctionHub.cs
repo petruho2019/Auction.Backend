@@ -35,11 +35,11 @@ namespace Auction.Application.Hubs.Auction
             });
 
             if (!result.IsSuccess)
-                throw new HubException(result.ErrorMessage);
+                throw new HubException(result.Error.ErrorMessage);
 
             await Clients
                 .Group(auctionId)
-                .SendAsync("SuccessMakeABid", result.Data!);
+                .SendAsync("SuccessMakeABid", result.Success.Data!);
 
             return true;
             

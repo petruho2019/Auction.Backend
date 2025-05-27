@@ -3,15 +3,8 @@ using Auction.Application.Common.Attributes.Property.CityValidation;
 using Auction.Application.Common.Attributes.Property.Integer;
 using Auction.Application.Common.Mappings;
 using Auction.Application.Features.Products.Commands.CreateProduct;
-using Auction.Domain.Models;
 using AutoMapper;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Auction.Application.Common.Models.Dto.Products
 {

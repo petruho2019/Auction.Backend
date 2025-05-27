@@ -3,21 +3,11 @@ using Auction.Application.Interfaces;
 using Auction.Domain.Models;
 using AutoMapper;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Auction.Application.Features.Products.Commands.CreateProduct
 {
-    public class CreateProductCommandHandler : BaseComponentHandler, IRequestHandler<CreateProductCommand, CreateProductVm>
+    public class CreateProductCommandHandler(IAuctionContext dbContext, IMapper mapper, ICurrentUserService currentUserService) : IRequestHandler<CreateProductCommand, CreateProductVm>
     {
-
-        public CreateProductCommandHandler(IAuctionContext dbContext, IMapper mapper, ICurrentUserService currentUserService) : base(dbContext, mapper, currentUserService)
-        {
-        }
-
         public async Task<CreateProductVm> Handle(CreateProductCommand request, CancellationToken cancellationToken)
         {
 
@@ -28,7 +18,7 @@ namespace Auction.Application.Features.Products.Commands.CreateProduct
                 Description = request.Description,
                 Location = request.Location,
                 Quantity = request.Quantity,
-                UserId = _currentUserService.UserId,
+                UserId = currentUserService.UserId,
             };
 
             var images = new List<ProductImage>();
@@ -58,10 +48,10 @@ namespace Auction.Application.Features.Products.Commands.CreateProduct
 
             product.Images = images;
 
-            await _dbContext.Products.AddAsync(product, cancellationToken);
-            await _dbContext.SaveChangesAsync(cancellationToken);
+            await dbContext.Products.AddAsync(product, cancellationToken);
+            await dbContext.SaveChangesAsync(cancellationToken);
 
-            return _mapper.Map<CreateProductVm>(product);
+            return mapper.Map<CreateProductVm>(product);
         }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Auction.Domain.Models
 {
-    public class Auction
+    public record Auction
     {
         public Guid Id { get; set; }
         public double CurrentPrice { get; set; }

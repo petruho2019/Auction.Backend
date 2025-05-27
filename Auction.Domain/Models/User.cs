@@ -1,14 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Auction.Domain.Models
+﻿namespace Auction.Domain.Models
 {
-    
-    public class User
+    public record User
     {
         public Guid Id { get; set; }
         public string Username { get; set; }

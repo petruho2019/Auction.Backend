@@ -1,9 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Auction.Domain.Models;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -19,7 +14,7 @@ namespace Auction.Database.EntityTypeConfiguration
             builder.Property(p => p.Name).IsRequired();
             builder.Property(p => p.Description).HasColumnType("text");
             builder.Property(p => p.Location).IsRequired();
-            builder.Property(p => p.Created).HasColumnType("timestamp without time zone");
+            builder.Property(p => p.Created).HasColumnType("TIMESTAMP");
 
 
             builder

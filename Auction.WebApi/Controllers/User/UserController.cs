@@ -9,17 +9,14 @@ namespace Auction.WebApi.Controllers.User
     [ApiController]
     [Route("/api/[controller]")]
     [Authorize]
-    public class UserController : BaseController
+    public class UserController(IMediator mediator, IMapper mapper) : BaseController(mediator, mapper)
     {
-        public UserController(IMediator mediator, IMapper mapper) : base(mediator, mapper)
-        {
-        }
 
         [Route("me")]
         [HttpGet]
         public async Task<IActionResult> GetMyInfo()
         {
-            var userInfo = await _mediator.Send(new GetUserInfoQuery());
+            var userInfo = await mediator.Send(new GetUserInfoQuery());
 
             return Ok(userInfo);
         }

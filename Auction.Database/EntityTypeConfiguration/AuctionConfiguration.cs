@@ -1,10 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Auction.Database.EntityTypeConfiguration
 {
@@ -14,8 +9,8 @@ namespace Auction.Database.EntityTypeConfiguration
         {
             builder.HasKey(a => a.Id).HasName("Auction_pkey");
             builder.ToTable("Auction");
-            builder.Property(a => a.Start).HasColumnType("timestamp without time zone");
-            builder.Property(a => a.End).HasColumnType("timestamp without time zone");
+            builder.Property(a => a.Start).HasColumnType("TIMESTAMP");
+            builder.Property(a => a.End).HasColumnType("TIMESTAMP");
 
             builder
                 .HasOne(a => a.Buyer)

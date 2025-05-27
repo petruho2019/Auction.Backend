@@ -8,6 +8,7 @@ using Auction.Application.Hubs.Auction;
 using Auction.Application.Interfaces;
 using Auction.Database;
 using Auction.JwtProvider;
+using Auction.WebApi.Middlewares;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Extensions.FileProviders;
@@ -62,7 +63,7 @@ internal class Program
         builder.Services.AddAuthorization();
         builder.Services.AddControllers(opt =>
         {
-            opt.Filters.Add<RefreshAndAccessCheckFilter>();
+            opt.Filters.Add<CheckAuthFilter>();
         });
         builder.Services.AddMvc();
         builder.Services.AddEndpointsApiExplorer();
@@ -106,6 +107,8 @@ internal class Program
             var context = scope.ServiceProvider.GetRequiredService<AuctionContext>();
             DbInitializer.Initialize(context);
         }
+
+        app.UseMiddleware<UserContextEnrichmentMiddleware>();
 
         app.UseStaticFiles();
 
