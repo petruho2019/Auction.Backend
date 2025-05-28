@@ -11,6 +11,8 @@ namespace Auction.Application.Features.Tokens.Commands.CreateRefreshToken
         public string Ip { get; set; }
         public Guid UserId { get; set; }
         public bool SkipDeviceLimitCheck { get; set; }
+        public string Username { get; set; }
+        public string Email { get; set; }
 
         public void Mapping(Profile profile)
         {

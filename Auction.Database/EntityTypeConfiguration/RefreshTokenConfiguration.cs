@@ -4,12 +4,12 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Auction.Database.EntityTypeConfiguration
 {
-    class RefreshTokenConfiguration : IEntityTypeConfiguration<RefreshToken>
+    class RefreshTokenConfiguration(string tableName, string schema) : IEntityTypeConfiguration<RefreshToken>
     {
         public void Configure(EntityTypeBuilder<RefreshToken> builder)
         {
             builder.HasKey(rt => rt.Id).HasName("Refreshtoken_pkey");
-            builder.ToTable("RefreshToken");
+            builder.ToTable(tableName, schema);
 
             builder.Property("Expires").HasColumnType("TIMESTAMP");
             builder.Property("Created").HasColumnType("TIMESTAMP");

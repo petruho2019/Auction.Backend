@@ -4,12 +4,12 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Auction.Database.EntityTypeConfiguration
 {
-    public class ProductImageConfiguration : IEntityTypeConfiguration<ProductImage>
+    public class ProductImageConfiguration(string tableName, string schema) : IEntityTypeConfiguration<ProductImage>
     {
         public void Configure(EntityTypeBuilder<ProductImage> builder)
         {
             builder.HasKey(pi => pi.Id).HasName("ProductImage_pkey");
-            builder.ToTable("ProductImage");
+            builder.ToTable(tableName, schema);
 
             builder.Property(pi => pi.Image).IsRequired();
 

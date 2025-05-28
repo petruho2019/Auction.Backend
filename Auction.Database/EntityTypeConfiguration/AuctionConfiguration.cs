@@ -3,12 +3,12 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Auction.Database.EntityTypeConfiguration
 {
-    class AuctionConfiguration : IEntityTypeConfiguration<Domain.Models.Auction>
+    class AuctionConfiguration(string tableName, string schema) : IEntityTypeConfiguration<Domain.Models.Auction>
     {
         public void Configure(EntityTypeBuilder<Domain.Models.Auction> builder)
         {
             builder.HasKey(a => a.Id).HasName("Auction_pkey");
-            builder.ToTable("Auction");
+            builder.ToTable(tableName, schema);
             builder.Property(a => a.Start).HasColumnType("TIMESTAMP");
             builder.Property(a => a.End).HasColumnType("TIMESTAMP");
 

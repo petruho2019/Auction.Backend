@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.Reflection;
 
 namespace Auction.Database
 {
@@ -14,7 +15,7 @@ namespace Auction.Database
 
             services.AddDbContext<AuctionContext>(opt =>
             {
-                opt.UseNpgsql(connectionString, options => options.MigrationsAssembly("Auction.WebApi"));
+                opt.UseNpgsql(connectionString, options => options.MigrationsAssembly(Assembly.GetExecutingAssembly()));
             });
 
             services.AddScoped<IAuctionContext>(provider

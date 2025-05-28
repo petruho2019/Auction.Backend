@@ -42,7 +42,7 @@ namespace Auction.Application.Features.AuctionParticipstions.Commands
                 AuctionId = auctionId,
                 UserId = currentUserService.UserId,
                 BidPrice = request.BidPrice,
-                BidTime = DateTime.UtcNow
+                BidTime = DateTime.Now
             };
 
             var auctionFromDb = await dbContext.Auctions.FirstOrDefaultAsync(a => a.Id.Equals(auctionId), cancellationToken)!;

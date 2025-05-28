@@ -4,12 +4,12 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Auction.Database.EntityTypeConfiguration
 {
-    class UserConfiguration : IEntityTypeConfiguration<User>
+    class UserConfiguration(string tableName, string schema) : IEntityTypeConfiguration<User>
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {
             builder.HasKey(e => e.Id).HasName("User_pkey");
-            builder.ToTable("User");
+            builder.ToTable(tableName, schema);
 
             builder.Property(e => e.Username)
                 .IsRequired();

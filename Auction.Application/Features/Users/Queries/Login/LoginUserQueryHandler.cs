@@ -5,12 +5,12 @@ using AutoMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Auction.Application.Features.Users.Commands.Login
+namespace Auction.Application.Features.Users.Queries.Login
 {
-    public class LoginUserCommandHandler(IAuctionContext dbContext, IMapper mapper, ICurrentUserService currentUserService) : IRequestHandler<LoginUserCommand, Result<UserAuth>>
+    public class LoginUserQueryHandler(IAuctionContext dbContext, IMapper mapper, ICurrentUserService currentUserService) : IRequestHandler<LoginUserQuery, Result<UserAuth>>
     {
 
-        public async Task<Result<UserAuth>> Handle(LoginUserCommand request, CancellationToken cancellationToken)
+        public async Task<Result<UserAuth>> Handle(LoginUserQuery request, CancellationToken cancellationToken)
         {
             var user = await dbContext.Users.FirstOrDefaultAsync(u => u.Username == request.Username, cancellationToken);
 

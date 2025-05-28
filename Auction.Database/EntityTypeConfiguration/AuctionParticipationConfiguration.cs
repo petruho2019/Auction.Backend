@@ -4,12 +4,12 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Auction.Database.EntityTypeConfiguration
 {
-    public class AuctionParticipationConfiguration : IEntityTypeConfiguration<AuctionParticipation>
+    public class AuctionParticipationConfiguration(string tableName, string schema) : IEntityTypeConfiguration<AuctionParticipation>
     {
         public void Configure(EntityTypeBuilder<AuctionParticipation> builder)
         {
             builder.HasKey(ap => ap.Id).HasName("AuctionParticipation_pkey");
-            builder.ToTable("AuctionParticipation");
+            builder.ToTable(tableName, schema);
 
             builder
                 .HasOne(ap => ap.Auction)

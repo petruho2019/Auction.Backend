@@ -1,6 +1,6 @@
 ﻿using Auction.Application.Common.Mappings;
 using Auction.Application.Common.Models.Vm.Users.Auth;
-using Auction.Application.Features.Users.Commands.Login;
+using Auction.Application.Features.Users.Queries.Login;
 using AutoMapper;
 
 namespace Auction.Application.Common.Models.Dto.Users
@@ -9,7 +9,7 @@ namespace Auction.Application.Common.Models.Dto.Users
     {
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<UserLoginDto, LoginUserCommand>()
+            profile.CreateMap<UserLoginDto, LoginUserQuery>()
                 .ForMember(command => command.Username, opt => opt.MapFrom(u => u.Username))
                 .ForMember(command => command.Password, opt => opt.MapFrom(u => u.Password));
         }

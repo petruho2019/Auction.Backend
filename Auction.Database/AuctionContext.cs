@@ -21,12 +21,12 @@ namespace Auction.Database
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new UserConfiguration());
-            modelBuilder.ApplyConfiguration(new ProductConfiguration());
-            modelBuilder.ApplyConfiguration(new ProductImageConfiguration());
-            modelBuilder.ApplyConfiguration(new AuctionConfiguration());
-            modelBuilder.ApplyConfiguration(new AuctionParticipationConfiguration());
-            modelBuilder.ApplyConfiguration(new RefreshTokenConfiguration());
+            modelBuilder.ApplyConfiguration(new UserConfiguration("User", "Auction"));
+            modelBuilder.ApplyConfiguration(new ProductConfiguration("Product", "Auction"));
+            modelBuilder.ApplyConfiguration(new ProductImageConfiguration("ProductImage", "Auction"));
+            modelBuilder.ApplyConfiguration(new AuctionConfiguration("Auction", "Auction"));
+            modelBuilder.ApplyConfiguration(new AuctionParticipationConfiguration("AuctionParticipation", "Auction"));
+            modelBuilder.ApplyConfiguration(new RefreshTokenConfiguration("RefreshToken", "Auction"));
         }
     }
 }

@@ -6,10 +6,12 @@ using Auction.Application.Common.Services;
 using Auction.Application.Common.Services.BackgroundServices;
 using Auction.Application.Hubs.Auction;
 using Auction.Application.Interfaces;
+using Auction.CacheService;
 using Auction.Database;
 using Auction.JwtProvider;
 using Auction.WebApi.Middlewares;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
@@ -26,6 +28,7 @@ internal class Program
         builder.Services.AddApplication(builder.Configuration);
         builder.Services.AddJwtProvider(builder.Configuration);
         builder.Services.AddAuctionContext(builder.Configuration);
+        builder.Services.AddCache(builder.Configuration);
         builder.Services.AddHttpClient();
 
         builder.Services.AddAutoMapper(conf =>
@@ -33,34 +36,18 @@ internal class Program
             conf.AddProfile(new AssemblyMappingProfile(Assembly.GetExecutingAssembly()));
         });
 
-        builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, opt =>
-            {
-                opt.TokenValidationParameters = new()
-                {
-                    ValidateIssuer = false,
-                    ValidateAudience = false,
-                    ValidateLifetime = true,
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:SecretKey"]!))
-                };
+        builder.Services.AddAuthentication(options =>
+        {
+            options.DefaultScheme = "Custom";
+            options.DefaultChallengeScheme = "Custom";
+        });
 
-                opt.Events = new()
-                {
-                    OnMessageReceived = context =>
-                    {
-                        var token = context.Request.Cookies["auction-token"];
-
-                        if (!string.IsNullOrEmpty(token))
-                        {
-                            context.Token = token;
-                        }
-
-                        return Task.CompletedTask;
-                    }
-                };
-            });
-        builder.Services.AddAuthorization();
+        builder.Services.AddAuthorization(options =>
+        {
+            options.DefaultPolicy = new AuthorizationPolicyBuilder()
+                .RequireAssertion(_ => true)
+                .Build();
+        });
         builder.Services.AddControllers(opt =>
         {
             opt.Filters.Add<CheckAuthFilter>();

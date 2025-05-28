@@ -10,7 +10,7 @@ using Auction.Application.Common.Models.Dto.Tokens.CreateRefreshToken;
 
 namespace Auction.JwtProvider
 {
-    public class JwtProvider(IConfiguration configuration) : IJwtProvider
+    public class JwtProvider(ICacheService cacheService, IConfiguration configuration, ICurrentUserService currentUserService) : IJwtProvider
     {
         public RefreshToken GenerateRefreshToken(CreateRefreshTokenDto createRefreshToken)
         {
@@ -19,15 +19,15 @@ namespace Auction.JwtProvider
                 Id = Guid.NewGuid(),
                 Token = RandomString(25) + Guid.NewGuid(),
                 CreatedByIp = createRefreshToken.Ip,
-                Expires = DateTime.UtcNow.AddMonths(int.Parse(configuration["JwtSettings:RefreshExpiresMonth"]!)),
-                Created = DateTime.UtcNow,
+                Expires = DateTime.Now.AddMonths(int.Parse(configuration["JwtSettings:RefreshExpiresMonths"]!)),
+                Created = DateTime.Now,
                 OwnerId = createRefreshToken.UserId
             };
 
             return refreshToken;
         }
 
-        public string GenerateToken(UserAuth user)
+        public string GenerateAccessToken(UserAuth user)
         {
             var signingCredentials = new SigningCredentials(
                 new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtSettings:SecretKey"]!)), SecurityAlgorithms.HmacSha256);
@@ -39,24 +39,88 @@ namespace Auction.JwtProvider
 
             var token = new JwtSecurityToken(
                signingCredentials: signingCredentials,
-               expires: DateTime.UtcNow.AddHours(int.Parse(configuration["JwtSettings:AccessExpiresHours"]!)),
+               expires: DateTime.Now.AddMinutes(int.Parse(configuration["JwtSettings:AccessExpiresMinutes"]!)),
                claims: claims
                 );
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
-        public bool ValidateAccess(string token)
+        public bool IsValidAccess(string token)
         {
-            var handler = new JwtSecurityTokenHandler();
-            var expTime = DateTime.UnixEpoch.AddSeconds(long.Parse(handler.ReadJwtToken(token).Claims.FirstOrDefault(c => c.Type.Equals("exp"))!.Value));
-            
-            return expTime < DateTime.UtcNow;
+            if (string.IsNullOrWhiteSpace(token))
+            {
+                return false;
+            }
+
+            try
+            {
+                if (!new JwtSecurityTokenHandler().CanReadToken(token))
+                {
+                    return false;
+                }
+
+                var jwtToken = new JwtSecurityTokenHandler().ReadJwtToken(token);
+
+                var expClaim = jwtToken.Claims.FirstOrDefault(c => c.Type.Equals("exp", StringComparison.Ordinal));
+                if (expClaim == null || string.IsNullOrWhiteSpace(expClaim.Value))
+                {
+                    return false;
+                }
+
+                if (!long.TryParse(expClaim.Value, out var expUnixTime))
+                {
+                    return false;
+                }
+
+                var expTime = DateTime.UnixEpoch.AddSeconds(expUnixTime);
+
+                return expTime > DateTime.Now;
+            }
+            catch (Exception ex) when (ex is ArgumentException || ex is SecurityTokenException)
+            {
+                return false;
+            }
         }
 
-        public bool ValidateRefreshWithCache(string token, string userId)
+        public async Task<bool> IsValidRefreshAsync(string token)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrWhiteSpace(token))
+            {
+                return false;
+            }
+
+            var refreshFromCache = await cacheService.GetAsync<CachedRefreshTokenDto>($"refresh:{currentUserService.UserId}");
+
+            if (refreshFromCache == null)
+                return false;
+            if (!refreshFromCache.Token.Equals(token))
+                return false;
+
+            return refreshFromCache.IsActive ? true : false;
+        }
+
+        public async Task<string> GenerateNewAccessTokenByRefresh(string token)
+        {
+            var refreshFromCache = await cacheService.GetAsync<CachedRefreshTokenDto>($"refresh:{currentUserService.UserId}");
+
+            if (refreshFromCache == null)
+                return String.Empty;
+            if (!refreshFromCache.Token.Equals(token))
+                return String.Empty;
+
+            return GenerateAccessToken(new()
+            {
+                UserId = refreshFromCache.OwnerId,
+                Username = refreshFromCache.OwnerUsername
+            });
+        }
+
+        public IReadOnlyCollection<Claim> GetClaimsFromAccess(string token)
+        {
+            var jwtToken = new JwtSecurityTokenHandler().ReadJwtToken(token);
+
+            return [.. jwtToken.Claims];
         }
 
         private string RandomString(int length)
@@ -66,5 +130,7 @@ namespace Auction.JwtProvider
             return new string(Enumerable.Repeat(chars, length)
             .Select(s => s[random.Next(s.Length)]).ToArray());
         }
+
+        
     }
 }

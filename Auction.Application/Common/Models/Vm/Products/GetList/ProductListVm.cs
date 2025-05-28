@@ -16,7 +16,7 @@ namespace Auction.Application.Common.Models.Vm.Products.GetList
         public string? Description { get; set; }
         public string Location { get; set; }
         public int Quantity { get; set; }
-        public DateTime DateCreate { get; set; } = DateTime.UtcNow;
+        public DateTime DateCreate { get; set; } = DateTime.Now;
         public List<string> Images { get; set; }
 
         public void Mapping(Profile profile)
