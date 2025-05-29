@@ -15,11 +15,10 @@ namespace Auction.Database
 
             services.AddDbContext<AuctionContext>(opt =>
             {
-                opt.UseNpgsql(connectionString, options => options.MigrationsAssembly(Assembly.GetExecutingAssembly()));
+                opt.UseNpgsql(connectionString/*, options => options.MigrationsAssembly(Assembly.GetExecutingAssembly())*/);
             });
 
-            services.AddScoped<IAuctionContext>(provider
-                => provider.GetRequiredService<AuctionContext>());
+            services.AddScoped<IAuctionContext, AuctionContext>();
 
             return services;
         }

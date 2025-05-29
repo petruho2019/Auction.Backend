@@ -1,6 +1,5 @@
 
 using Auction.Application;
-using Auction.Application.Attributes.Class.Filters;
 using Auction.Application.Common.Mappings;
 using Auction.Application.Common.Services;
 using Auction.Application.Common.Services.BackgroundServices;
@@ -9,14 +8,9 @@ using Auction.Application.Interfaces;
 using Auction.CacheService;
 using Auction.Database;
 using Auction.JwtProvider;
-using Auction.WebApi.Middlewares;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.EntityFrameworkCore.Internal;
-using Microsoft.Extensions.FileProviders;
-using Microsoft.IdentityModel.Tokens;
+using Auction.WebApi.AuthHandler;
+using Microsoft.AspNetCore.Authentication;
 using System.Reflection;
-using System.Text;
 
 namespace Auction.Presentation;
 internal class Program
@@ -38,20 +32,12 @@ internal class Program
 
         builder.Services.AddAuthentication(options =>
         {
-            options.DefaultScheme = "Custom";
-            options.DefaultChallengeScheme = "Custom";
-        });
+            options.DefaultScheme = "AccessRefresh";
+            options.DefaultChallengeScheme = "AccessRefresh";
+        }).AddScheme<AuthenticationSchemeOptions, AccessRefreshAuthenticationHandler>("AccessRefresh", opt => { });
 
-        builder.Services.AddAuthorization(options =>
-        {
-            options.DefaultPolicy = new AuthorizationPolicyBuilder()
-                .RequireAssertion(_ => true)
-                .Build();
-        });
-        builder.Services.AddControllers(opt =>
-        {
-            opt.Filters.Add<CheckAuthFilter>();
-        });
+        builder.Services.AddAuthorization();
+
         builder.Services.AddMvc();
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
@@ -94,8 +80,6 @@ internal class Program
             var context = scope.ServiceProvider.GetRequiredService<AuctionContext>();
             DbInitializer.Initialize(context);
         }
-
-        app.UseMiddleware<UserContextEnrichmentMiddleware>();
 
         app.UseStaticFiles();
 

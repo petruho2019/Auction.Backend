@@ -90,7 +90,7 @@ namespace Auction.JwtProvider
                 return false;
             }
 
-            var refreshFromCache = await cacheService.GetAsync<CachedRefreshTokenDto>($"refresh:{currentUserService.UserId}");
+            var refreshFromCache = await cacheService.GetAsync<CachedRefreshTokenDto>($"refresh:{token}");
 
             if (refreshFromCache == null)
                 return false;
@@ -102,7 +102,7 @@ namespace Auction.JwtProvider
 
         public async Task<string> GenerateNewAccessTokenByRefresh(string token)
         {
-            var refreshFromCache = await cacheService.GetAsync<CachedRefreshTokenDto>($"refresh:{currentUserService.UserId}");
+            var refreshFromCache = await cacheService.GetAsync<CachedRefreshTokenDto>($"refresh:{token}");
 
             if (refreshFromCache == null)
                 return String.Empty;

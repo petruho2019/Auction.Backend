@@ -1,6 +1,4 @@
-﻿using Auction.Application.Common.Extensions;
-using Auction.Application.Common.Models.Dto.Tokens.CreateRefreshToken;
-using Auction.Application.Common.Models.Dto.Users;
+﻿using Auction.Application.Common.Models.Dto.Users;
 using Auction.Application.Common.Models.Vm.Users.Auth;
 using Auction.Application.Features.Tokens.Commands.CreateRefreshToken;
 using Auction.Application.Features.Users.Commands.CreateUser;

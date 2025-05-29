@@ -4,7 +4,6 @@ using Auction.Application.Interfaces;
 using Auction.Domain.Models;
 using AutoMapper;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
 namespace Auction.Application.Features.Tokens.Commands.CreateRefreshToken
@@ -29,7 +28,7 @@ namespace Auction.Application.Features.Tokens.Commands.CreateRefreshToken
             cachedRefreshToken.OwnerUsername = request.Username;
             cachedRefreshToken.OwnerEmail = request.Email;
 
-            await cacheService.SetAsync($"refresh:{request.UserId}", cachedRefreshToken, expire, cancellationToken);
+            await cacheService.SetAsync($"refresh:{refreshToken.Token}", cachedRefreshToken, expire, cancellationToken);
 
             await dbContext.RefreshTokens.AddAsync(refreshToken, cancellationToken);
             await dbContext.SaveChangesAsync(cancellationToken);

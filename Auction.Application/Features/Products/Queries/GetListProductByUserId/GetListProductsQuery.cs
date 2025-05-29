@@ -3,5 +3,5 @@ using MediatR;
 
 namespace Auction.Application.Features.Products.Queries.GetAll
 {
-    public record GetListProductQuery : IRequest<List<ProductListVm>>;
+    public record GetListProductsQuery : IRequest<List<ProductListVm>>;
 }

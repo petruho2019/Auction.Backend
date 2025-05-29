@@ -14,6 +14,8 @@ namespace Auction.Database
         public DbSet<AuctionParticipation> AuctionParticipations { get; set; }
         public DbSet<RefreshToken> RefreshTokens { get; set; }
 
+        public AuctionContext() { }
+
         public AuctionContext(DbContextOptions options) : base(options)
         {
             

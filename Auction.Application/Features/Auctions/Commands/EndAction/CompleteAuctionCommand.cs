@@ -5,6 +5,6 @@ namespace Auction.Application.Features.Auctions.Commands.EndAction
 {
     public record CompleteAuctionCommand : IRequest<Result>
     {
-        public Guid AuctionId { get; set; }
+        public Domain.Models.Auction Auction { get; set; }
     }
 }

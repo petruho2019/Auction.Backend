@@ -1,7 +1,6 @@
 ﻿using Auction.Application.Interfaces;
 using Newtonsoft.Json;
 using StackExchange.Redis;
-using System.Data;
 
 namespace Auction.CacheService
 {

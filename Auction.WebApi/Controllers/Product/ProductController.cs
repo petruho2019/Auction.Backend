@@ -5,7 +5,6 @@ using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
 
 namespace Auction.WebApi.Controllers.Product
 {
@@ -28,8 +27,7 @@ namespace Auction.WebApi.Controllers.Product
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-
-            var products = await mediator.Send(new GetListProductQuery());
+            var products = await mediator.Send(new GetListProductsQuery());
             return Ok(products);
         }
     }

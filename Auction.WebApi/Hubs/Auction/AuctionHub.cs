@@ -14,11 +14,8 @@ using System.Threading.Tasks;
 
 namespace Auction.Application.Hubs.Auction
 {
-    public class AuctionHub : BaseHub
+    public class AuctionHub(IMediator mediator) : BaseHub(mediator)
     {
-        public AuctionHub(IMediator mediator) : base(mediator)
-        {
-        }
 
         public override Task OnConnectedAsync()
         {
@@ -28,7 +25,7 @@ namespace Auction.Application.Hubs.Auction
 
         public async Task<bool> MakeABid(int bidPrice, string auctionId)
         {
-            var result = await _mediator.Send(new CreateAuctionParticipationCommand()
+            var result = await mediator.Send(new CreateAuctionParticipationCommand()
             {
                 AuctionId = auctionId,
                 BidPrice = bidPrice

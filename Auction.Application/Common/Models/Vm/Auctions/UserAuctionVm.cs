@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Auction.Application.Common.Models.Vm.Auctions
+﻿namespace Auction.Application.Common.Models.Vm.Auctions
 {
     public class UserAuctionVm
     {

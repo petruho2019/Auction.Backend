@@ -8,16 +8,9 @@ using Microsoft.Extensions.Logging;
 
 namespace Auction.Application.Common.Services.BackgroundServices
 {
-    public class AuctionEndedCheckerService : BackgroundService
+    public class AuctionEndedCheckerService(IServiceProvider services, ILogger<AuctionEndedCheckerService> logger) : BackgroundService
     {
-        private readonly IServiceProvider _services;
-        private readonly ILogger<AuctionEndedCheckerService> _logger;
 
-        public AuctionEndedCheckerService(IServiceProvider services, ILogger<AuctionEndedCheckerService> logger)
-        {
-            _services = services;
-            _logger = logger;
-        }
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             while (!stoppingToken.IsCancellationRequested)
@@ -29,7 +22,7 @@ namespace Auction.Application.Common.Services.BackgroundServices
 
         private async Task CheckEndedAuction()
         {
-            using var scope = _services.CreateScope();
+            using var scope = services.CreateScope();
 
             var dbContext = scope.ServiceProvider.GetRequiredService<IAuctionContext>();
             var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
@@ -42,11 +35,11 @@ namespace Auction.Application.Common.Services.BackgroundServices
             {
                 try
                 {
-                    await mediator.Send(new CompleteAuctionCommand() { AuctionId = auction.Id });
+                    await mediator.Send(new CompleteAuctionCommand() { Auction = auction });
                 }
                 catch (Exception ex)
                 {
-                    _logger.LogError(ex, $"Ошибка при завершении аукциона {auction.Id}");
+                    logger.LogError(ex, $"Ошибка при завершении аукциона {auction.Id}");
                 }
             }
         }
