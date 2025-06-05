@@ -11,6 +11,8 @@ namespace Auction.Database.EntityTypeConfiguration
             builder.HasKey(ap => ap.Id).HasName("AuctionParticipation_pkey");
             builder.ToTable(tableName, schema);
 
+            builder.Property(p => p.BidTime).HasColumnType("TIMESTAMP");
+
             builder
                 .HasOne(ap => ap.Auction)
                 .WithMany(a => a.Participations)

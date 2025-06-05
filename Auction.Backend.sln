@@ -32,6 +32,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Auction.JwtProvider", "Auct
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Auction.CacheService", "Auction.CacheService\Auction.CacheService.csproj", "{29ACCE93-12F7-4A80-A4C5-7363CCD465DA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Auction.MailService", "Auction.MailService\Auction.MailService.csproj", "{F624AEC7-6ECF-405A-B9E6-D7CD8DD3AEB7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -66,6 +68,10 @@ Global
 		{29ACCE93-12F7-4A80-A4C5-7363CCD465DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{29ACCE93-12F7-4A80-A4C5-7363CCD465DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{29ACCE93-12F7-4A80-A4C5-7363CCD465DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F624AEC7-6ECF-405A-B9E6-D7CD8DD3AEB7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F624AEC7-6ECF-405A-B9E6-D7CD8DD3AEB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F624AEC7-6ECF-405A-B9E6-D7CD8DD3AEB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F624AEC7-6ECF-405A-B9E6-D7CD8DD3AEB7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -77,6 +83,7 @@ Global
 		{01BC45AC-82B6-F913-AF01-AADEB9B9CFF6} = {3A15CCCA-89DD-4DA8-A917-A5EB167B9502}
 		{81CB989B-5C94-4635-A2C2-1DA385CC6D3E} = {3A15CCCA-89DD-4DA8-A917-A5EB167B9502}
 		{29ACCE93-12F7-4A80-A4C5-7363CCD465DA} = {3A15CCCA-89DD-4DA8-A917-A5EB167B9502}
+		{F624AEC7-6ECF-405A-B9E6-D7CD8DD3AEB7} = {3A15CCCA-89DD-4DA8-A917-A5EB167B9502}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {296E3FD2-43DC-4726-B475-F30EE55A8158}

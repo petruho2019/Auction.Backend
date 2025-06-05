@@ -12,6 +12,6 @@ namespace Auction.Application.Interfaces
         Task<string> GenerateNewAccessTokenByRefresh(string refreshToken);
         bool IsValidAccess(string token);
         Task<bool> IsValidRefreshAsync(string token);
-        IReadOnlyCollection<Claim> GetClaimsFromAccess(string token);
+        IReadOnlyCollection<Claim> GetClaims(string token);
     }
 }

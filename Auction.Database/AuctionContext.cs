@@ -13,6 +13,7 @@ namespace Auction.Database
         public DbSet<Domain.Models.Auction> Auctions { get; set; } = null!;
         public DbSet<AuctionParticipation> AuctionParticipations { get; set; }
         public DbSet<RefreshToken> RefreshTokens { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
 
         public AuctionContext() { }
 
@@ -29,6 +30,8 @@ namespace Auction.Database
             modelBuilder.ApplyConfiguration(new AuctionConfiguration("Auction", "Auction"));
             modelBuilder.ApplyConfiguration(new AuctionParticipationConfiguration("AuctionParticipation", "Auction"));
             modelBuilder.ApplyConfiguration(new RefreshTokenConfiguration("RefreshToken", "Auction"));
+            modelBuilder.ApplyConfiguration(new NotificationConfiguration("Notification", "Auction"));
+
         }
     }
 }

@@ -1,9 +1,7 @@
-﻿using Auction.Application.Common.Extensions;
+﻿using Auction.Application.Common.Models;
 using Auction.Application.Common.Models.Dto.Auction;
-using Auction.Application.Common.Models.Vm.Auctions.Create;
-using Auction.Application.Common.Models.Vm.Auctions.GetById;
 using Auction.Application.Features.Auctions.Commands.CreateAuction;
-using Auction.Application.Features.Auctions.Commands.EndAction;
+using Auction.Application.Features.Auctions.Commands.Delete;
 using Auction.Application.Features.Auctions.Queries.GetById;
 using Auction.Application.Features.Auctions.Queries.GetListAuction;
 using AutoMapper;
@@ -31,6 +29,17 @@ namespace Auction.WebApi.Controllers.Auction
             }
 
             return ToActionResultSuccess(createResult.Success);
+        }
+
+        [HttpDelete("delete/{id}")]
+        public async Task<IActionResult> Delete(string id)
+        {
+            var result = await mediator.Send(new DeleteAuctionCommand() { AuctionId = Guid.Parse(id)});
+
+            if (!result.IsSuccess)
+                return ToActionResultError(result.Error);
+
+            return ToActionResultSuccess(result.Success);
         }
 
         [HttpGet("{id}")]

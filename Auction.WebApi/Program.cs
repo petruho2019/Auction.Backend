@@ -8,6 +8,7 @@ using Auction.Application.Interfaces;
 using Auction.CacheService;
 using Auction.Database;
 using Auction.JwtProvider;
+using Auction.MailService;
 using Auction.WebApi.AuthHandler;
 using Microsoft.AspNetCore.Authentication;
 using System.Reflection;
@@ -19,11 +20,13 @@ internal class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        builder.Services.AddApplication(builder.Configuration);
-        builder.Services.AddJwtProvider(builder.Configuration);
-        builder.Services.AddAuctionContext(builder.Configuration);
-        builder.Services.AddCache(builder.Configuration);
         builder.Services.AddHttpClient();
+
+        builder.Services.AddApplication(builder.Configuration);
+        builder.Services.AddAuctionContext(builder.Configuration);
+        builder.Services.AddJwtProvider();
+        builder.Services.AddCache(builder.Configuration);
+        builder.Services.AddMailService();
 
         builder.Services.AddAutoMapper(conf =>
         {
@@ -69,6 +72,7 @@ internal class Program
         app.UseAuthorization();
 
         app.UseSwagger();
+
         app.UseSwaggerUI(opt =>
         {
             opt.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");

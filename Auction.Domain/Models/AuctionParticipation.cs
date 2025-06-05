@@ -10,7 +10,7 @@
         public User User { get; set; }
 
         public double BidPrice { get; set; }
-        public DateTime BidTime { get; set; }
+        public DateTime BidTime { get; set; } = DateTime.Now;
     }
 
 }

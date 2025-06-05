@@ -2,14 +2,14 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Auction.JwtProvider
+namespace Auction.MailService
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection AddJwtProvider(this IServiceCollection services)
+        public static IServiceCollection AddMailService(this IServiceCollection services)
         {
 
-            services.AddTransient<IJwtProvider, JwtProvider>();
+            services.AddTransient<IMailService, MailService>();
 
             return services;
         }

@@ -14,5 +14,7 @@
         public List<AuctionParticipation> Participations { get; set; }
 
         public List<RefreshToken> RefreshTokens { get; set; }
+        public List<Notification> Notifications { get; set; }
+
     }
 }

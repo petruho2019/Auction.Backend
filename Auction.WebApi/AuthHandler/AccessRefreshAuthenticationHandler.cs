@@ -17,19 +17,15 @@ namespace Auction.WebApi.AuthHandler
                 Response.StatusCode = 401;
                 return AuthenticateResult.Fail("Refresh token emapty");
             }
+
             if (!await jwtProvider.IsValidRefreshAsync(refreshToken))
-            {
                 return AuthenticateResult.Fail("Refresh token is invalid");
-            }
 
             var accessToken = Request.Cookies["auction-access"];
             if (!string.IsNullOrEmpty(accessToken) && jwtProvider.IsValidAccess(accessToken))
-            {
                 return Success(accessToken);          
-            }
-
+            
             var newAccess = await jwtProvider.GenerateNewAccessTokenByRefresh(refreshToken);
-
             if (!string.IsNullOrEmpty(newAccess))
             {
                 AppendAccessTokenToCookie(Response, newAccess);
@@ -41,7 +37,7 @@ namespace Auction.WebApi.AuthHandler
 
         private AuthenticateResult Success(string accessToken)
         {
-            var identity = new ClaimsIdentity(jwtProvider.GetClaimsFromAccess(accessToken), Scheme.Name);
+            var identity = new ClaimsIdentity(jwtProvider.GetClaims(accessToken), Scheme.Name);
             var principal = new ClaimsPrincipal(identity);
             var ticket = new AuthenticationTicket(principal, Scheme.Name);
             return AuthenticateResult.Success(ticket);

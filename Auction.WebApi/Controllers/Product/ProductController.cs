@@ -19,7 +19,6 @@ namespace Auction.WebApi.Controllers.Product
         public async Task<IActionResult> Create([FromBody] CreateProductDto createProductDto)
         {
             var productVm = await mediator.Send(mapper.Map<CreateProductCommand>(createProductDto));
-
             return Ok(productVm);
         }
 

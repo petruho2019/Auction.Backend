@@ -1,6 +1,4 @@
 services:
-  
-
   auction.webapi:
     env_file: ".env"
     image: ${DOCKER_REGISTRY-}auctionwebapi

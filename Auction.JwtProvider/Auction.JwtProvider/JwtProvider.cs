@@ -116,7 +116,7 @@ namespace Auction.JwtProvider
             });
         }
 
-        public IReadOnlyCollection<Claim> GetClaimsFromAccess(string token)
+        public IReadOnlyCollection<Claim> GetClaims(string token)
         {
             var jwtToken = new JwtSecurityTokenHandler().ReadJwtToken(token);
 

@@ -1,4 +1,5 @@
 ﻿using Auction.Application.Features.Auctions.Commands.EndAction;
+using Auction.Application.Features.Notifications;
 using Auction.Application.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -36,6 +37,7 @@ namespace Auction.Application.Common.Services.BackgroundServices
                 try
                 {
                     await mediator.Send(new CompleteAuctionCommand() { Auction = auction });
+                    await mediator.Send(new SendMailNotification() { Auction = auction });
                 }
                 catch (Exception ex)
                 {

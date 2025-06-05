@@ -29,7 +29,7 @@ namespace Auction.Application.Features.Products.Commands.CreateProduct
             {
                 count++;
 
-                var imagesDir = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images");
+                var imagesDir = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images");
 
                 if (!Directory.Exists(imagesDir))
                     Directory.CreateDirectory(imagesDir);

@@ -8,25 +8,11 @@ namespace Auction.Application.Common.Models
     {
         public string ErrorMessage { get; set; }
         public HttpStatusCode StatusCode { get; set; }
-
-        public IActionResult ToActionResult()
-        {
-            return new ObjectResult(ErrorMessage) { StatusCode = StatusCode.GetInt()};
-        }
     }
     public record Success<T>
     {
         public T Data { get; set; }
         public HttpStatusCode StatusCode { get; set; }
-
-        public IActionResult ToActionResult()
-        {
-            return new ObjectResult(Data) { StatusCode = StatusCode.GetInt() };
-        }
-        public IActionResult ToActionResult(object newData)
-        {
-            return new ObjectResult(newData) { StatusCode = StatusCode.GetInt() };
-        }
     }
     public record Success
     {
@@ -55,7 +41,6 @@ namespace Auction.Application.Common.Models
         {
             return new Result<T>() { Error = new() { ErrorMessage = errorMessage, StatusCode = HttpStatusCode.BadRequest } };
         }
-
     }
     public class Result
     {
@@ -68,6 +53,10 @@ namespace Auction.Application.Common.Models
             return new Result() { Success = new() { StatusCode = HttpStatusCode.NoContent }, IsSuccess = true };
         }
 
+        public static Result Ok()
+        {
+            return new Result() { Success = new() { StatusCode = HttpStatusCode.OK }, IsSuccess = true };
+        }
         public static Result BadRequest(string errorMessage)
         {
             return new Result() { Error = new() { ErrorMessage = errorMessage, StatusCode = HttpStatusCode.BadRequest } };

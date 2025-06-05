@@ -131,7 +131,7 @@ namespace Auction.WebApi.Controllers.Auth
 
         private void UpdateUserContext(HttpContext httpContext, string accessToken)
         {
-            var claims = jwtProvider.GetClaimsFromAccess(accessToken);
+            var claims = jwtProvider.GetClaims(accessToken);
             var identity = new ClaimsIdentity(claims, "Custom"); 
             httpContext.SignInAsync(new ClaimsPrincipal(identity));
         }

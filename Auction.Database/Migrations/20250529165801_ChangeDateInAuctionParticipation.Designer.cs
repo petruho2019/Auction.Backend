@@ -3,6 +3,7 @@ using System;
 using Auction.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Auction.WebApi.Migrations
 {
     [DbContext(typeof(AuctionContext))]
-    partial class AuctionContextModelSnapshot : ModelSnapshot
+    [Migration("20250529165801_ChangeDateInAuctionParticipation")]
+    partial class ChangeDateInAuctionParticipation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -90,27 +93,6 @@ namespace Auction.WebApi.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("AuctionParticipation", "Auction");
-                });
-
-            modelBuilder.Entity("Auction.Domain.Models.Notification", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("Message")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("Id")
-                        .HasName("Notification_pkey");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Notification", "Auction");
                 });
 
             modelBuilder.Entity("Auction.Domain.Models.Product", b =>
@@ -270,17 +252,6 @@ namespace Auction.WebApi.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Auction.Domain.Models.Notification", b =>
-                {
-                    b.HasOne("Auction.Domain.Models.User", "User")
-                        .WithMany("Notifications")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("Auction.Domain.Models.Product", b =>
                 {
                     b.HasOne("Auction.Domain.Models.User", "User")
@@ -329,8 +300,6 @@ namespace Auction.WebApi.Migrations
             modelBuilder.Entity("Auction.Domain.Models.User", b =>
                 {
                     b.Navigation("CretedAuctions");
-
-                    b.Navigation("Notifications");
 
                     b.Navigation("Participations");
 

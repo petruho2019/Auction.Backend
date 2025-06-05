@@ -26,6 +26,7 @@
     <ProjectReference Include="..\Auction.CacheService\Auction.CacheService.csproj" />
     <ProjectReference Include="..\Auction.Database\Auction.Database.csproj" />
     <ProjectReference Include="..\Auction.JwtProvider\Auction.JwtProvider\Auction.JwtProvider.csproj" />
+    <ProjectReference Include="..\Auction.MailService\Auction.MailService.csproj" />
   </ItemGroup>
 
   <ItemGroup>

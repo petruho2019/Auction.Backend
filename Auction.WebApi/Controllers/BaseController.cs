@@ -10,6 +10,9 @@ namespace Auction.WebApi.Controllers
     public class BaseController(IMediator mediator, IMapper mapper) : ControllerBase
     {
         [ApiExplorerSettings(IgnoreApi = true)]
+        public IActionResult ToActionResultSuccess(Success success)
+            => new StatusCodeResult(success.StatusCode.GetInt());
+        [ApiExplorerSettings(IgnoreApi = true)]
         public IActionResult ToActionResultSuccess<T>(Success<T> success)
             => new ObjectResult(success.Data) { StatusCode = success.StatusCode.GetInt() };
         [ApiExplorerSettings(IgnoreApi = true)]

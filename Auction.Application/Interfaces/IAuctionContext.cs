@@ -11,6 +11,7 @@ namespace Auction.Application.Interfaces
         DbSet<Domain.Models.Auction> Auctions { get; set; }
         DbSet<AuctionParticipation> AuctionParticipations { get; set; }
         DbSet<RefreshToken> RefreshTokens { get; set; }
+        DbSet<Notification> Notifications { get; set; }
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }
 }
