@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Auction.WebApi.Migrations
 {
     /// <inheritdoc />
-    public partial class AddMailNotification : Migration
+    public partial class AddNotification : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -18,11 +18,19 @@ namespace Auction.WebApi.Migrations
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Message = table.Column<string>(type: "text", nullable: false),
-                    UserId = table.Column<Guid>(type: "uuid", nullable: false)
+                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
+                    AuctionId = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("Notification_pkey", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Notification_Auction_AuctionId",
+                        column: x => x.AuctionId,
+                        principalSchema: "Auction",
+                        principalTable: "Auction",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Notification_User_UserId",
                         column: x => x.UserId,
@@ -31,6 +39,12 @@ namespace Auction.WebApi.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Notification_AuctionId",
+                schema: "Auction",
+                table: "Notification",
+                column: "AuctionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Notification_UserId",

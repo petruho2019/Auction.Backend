@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.Caching.Distributed;
-
-namespace Auction.Application.Interfaces
+﻿namespace Auction.Application.Interfaces
 {
     public interface ICacheService
     {

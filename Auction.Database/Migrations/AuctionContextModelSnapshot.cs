@@ -98,6 +98,9 @@ namespace Auction.WebApi.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<Guid>("AuctionId")
+                        .HasColumnType("uuid");
+
                     b.Property<string>("Message")
                         .IsRequired()
                         .HasColumnType("text");
@@ -107,6 +110,8 @@ namespace Auction.WebApi.Migrations
 
                     b.HasKey("Id")
                         .HasName("Notification_pkey");
+
+                    b.HasIndex("AuctionId");
 
                     b.HasIndex("UserId");
 
@@ -272,11 +277,19 @@ namespace Auction.WebApi.Migrations
 
             modelBuilder.Entity("Auction.Domain.Models.Notification", b =>
                 {
+                    b.HasOne("Auction.Domain.Models.Auction", "Auction")
+                        .WithMany()
+                        .HasForeignKey("AuctionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Auction.Domain.Models.User", "User")
                         .WithMany("Notifications")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Auction");
 
                     b.Navigation("User");
                 });

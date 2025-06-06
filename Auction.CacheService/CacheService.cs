@@ -19,7 +19,6 @@ namespace Auction.CacheService
             var db = multiplexer.GetDatabase();
             return await db.HashExistsAsync(key, field); ;
         }
-
         public async Task<Dictionary<string, T>> HashGetAllAsync<T>(string key)
         {
             var db = multiplexer.GetDatabase();
